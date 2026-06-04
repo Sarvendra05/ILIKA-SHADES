@@ -107,7 +107,7 @@
         <div id="toast-container" class="fixed top-6 right-6 z-[9999] flex flex-col gap-3"></div>
 
         <!-- Header -->
-        <header class="bg-white border-b border-stone-200 py-4 px-8 flex justify-between items-center">
+        <header class="bg-white border-b border-stone-200 py-4 px-4 md:px-8 flex justify-between items-center">
             <h2 id="active-tab-title" class="font-headline text-2xl font-bold text-stone-800">Dashboard</h2>
             <div class="flex items-center gap-4">
                 <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">Supabase Connected</span>
@@ -115,7 +115,7 @@
         </header>
 
         <!-- Scrollable Dashboard Inner -->
-        <div class="flex-grow p-8 overflow-y-auto max-w-7xl w-full mx-auto space-y-8">
+        <div class="flex-grow p-4 md:p-8 overflow-y-auto max-w-7xl w-full mx-auto space-y-8">
             <!-- TAB 1: OVERVIEW -->
             <section id="tab-overview" class="tab-pane space-y-8">
                 <!-- Overview Stats Grid -->
@@ -172,8 +172,8 @@
                 </div>
 
                 <!-- Categories List -->
-                <div class="bg-white rounded border border-stone-200 overflow-hidden">
-                    <table class="w-full text-left border-collapse text-sm">
+                <div class="bg-white rounded border border-stone-200 overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse text-sm min-w-[500px]">
                         <thead>
                             <tr class="bg-stone-50 border-b border-stone-200 text-on-surface-variant font-label font-bold uppercase tracking-wider text-xs">
                                 <th class="p-4">Category Name</th>
@@ -207,8 +207,8 @@
                 </div>
 
                 <!-- Products Table -->
-                <div class="bg-white rounded border border-stone-200 overflow-hidden">
-                    <table class="w-full text-left border-collapse text-sm">
+                <div class="bg-white rounded border border-stone-200 overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse text-sm min-w-[600px]">
                         <thead>
                             <tr class="bg-stone-50 border-b border-stone-200 text-on-surface-variant font-label font-bold uppercase tracking-wider text-xs">
                                 <th class="p-4">Product Details</th>

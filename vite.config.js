@@ -32,8 +32,8 @@ export default defineConfig(({ mode }) => {
           about: resolve(__dirname, 'about.html'),
           products: resolve(__dirname, 'products.html'),
           contact: resolve(__dirname, 'contact.html'),
-          admin: resolve(__dirname, 'scripts/admin/index.html'),
-          login: resolve(__dirname, 'scripts/admin/login.html')
+          admin: resolve(__dirname, 'admin/index.html'),
+          login: resolve(__dirname, 'admin/login.html')
         }
       }
     }

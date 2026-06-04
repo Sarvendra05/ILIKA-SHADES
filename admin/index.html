@@ -350,68 +350,68 @@
     </div>
 
     <!-- MODAL: ADD / EDIT PRODUCT -->
-    <div id="product-modal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-6 overflow-y-auto">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl border border-stone-200 overflow-hidden my-8">
-            <div class="bg-stone-50 border-b border-stone-200 px-6 py-4 flex justify-between items-center">
-                <h4 id="product-modal-title" class="font-headline font-bold text-stone-800">Add Product</h4>
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-start justify-center p-4 md:p-6 overflow-y-auto">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl border border-stone-200 overflow-hidden my-4 md:my-8">
+            <div class="bg-stone-50 border-b border-stone-200 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+                <h4 id="product-modal-title" class="font-headline font-bold text-stone-800 text-base md:text-lg">Add Product</h4>
                 <button type="button" class="text-stone-400 hover:text-stone-600 close-modal-btn">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
-            <form id="product-form" class="p-6 space-y-6">
+            <form id="product-form" class="p-4 md:p-6 space-y-4 md:space-y-6">
                 <input type="hidden" id="product-id"/>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-2">
-                        <label for="prod-name" class="block font-label text-sm font-medium text-on-surface-variant">Product Name</label>
-                        <input type="text" id="prod-name" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="space-y-1.5">
+                        <label for="prod-name" class="block font-label text-xs md:text-sm font-medium text-on-surface-variant">Product Name</label>
+                        <input type="text" id="prod-name" required class="w-full bg-white border border-stone-300 rounded px-3 py-2 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:outline-none"/>
                     </div>
-                    <div class="space-y-2">
-                        <label for="prod-price" class="block font-label text-sm font-medium text-on-surface-variant">Price (₹)</label>
-                        <input type="number" id="prod-price" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none" min="0"/>
+                    <div class="space-y-1.5">
+                        <label for="prod-price" class="block font-label text-xs md:text-sm font-medium text-on-surface-variant">Price (₹)</label>
+                        <input type="number" id="prod-price" required class="w-full bg-white border border-stone-300 rounded px-3 py-2 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:outline-none" min="0"/>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-2">
-                        <label for="prod-category" class="block font-label text-sm font-medium text-on-surface-variant">Category</label>
-                        <select id="prod-category" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="space-y-1.5">
+                        <label for="prod-category" class="block font-label text-xs md:text-sm font-medium text-on-surface-variant">Category</label>
+                        <select id="prod-category" required class="w-full bg-white border border-stone-300 rounded px-3 py-2 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:outline-none">
                             <option value="">Select Category</option>
                             <!-- Injected -->
                         </select>
                     </div>
-                    <div class="flex items-center gap-3 pt-8">
+                    <div class="flex items-center gap-3 pt-1 md:pt-8">
                         <input type="checkbox" id="prod-featured" class="h-4 w-4 rounded border-stone-300 text-primary focus:ring-primary"/>
-                        <label for="prod-featured" class="font-label text-sm font-medium text-stone-700 cursor-pointer">Featured Product (Shows on Homepage)</label>
+                        <label for="prod-featured" class="font-label text-xs md:text-sm font-medium text-stone-700 cursor-pointer">Featured Product (Shows on Homepage)</label>
                     </div>
                 </div>
 
-                <div class="space-y-2">
-                    <label for="prod-description" class="block font-label text-sm font-medium text-on-surface-variant">Product Description</label>
-                    <textarea id="prod-description" rows="3" class="w-full bg-white border border-stone-300 rounded p-4 focus:ring-1 focus:ring-primary focus:outline-none text-sm"></textarea>
+                <div class="space-y-1.5">
+                    <label for="prod-description" class="block font-label text-xs md:text-sm font-medium text-on-surface-variant">Product Description</label>
+                    <textarea id="prod-description" rows="3" class="w-full bg-white border border-stone-300 rounded p-3 focus:ring-1 focus:ring-primary focus:outline-none text-xs md:text-sm"></textarea>
                 </div>
 
                 <!-- Product Images Manager -->
-                <div class="space-y-4">
-                    <label class="block font-label text-sm font-medium text-on-surface-variant">Product Images</label>
+                <div class="space-y-3">
+                    <label class="block font-label text-xs md:text-sm font-medium text-on-surface-variant">Product Images</label>
                     
                     <!-- Drag and Drop/Click Uploader -->
-                    <div class="border-2 border-dashed border-stone-300 rounded-lg p-6 text-center hover:bg-stone-50 transition-colors cursor-pointer relative" id="image-dropzone">
+                    <div class="border-2 border-dashed border-stone-300 rounded-lg p-4 md:p-6 text-center hover:bg-stone-50 transition-colors cursor-pointer relative" id="image-dropzone">
                         <input type="file" id="prod-images-upload" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer"/>
-                        <span class="material-symbols-outlined text-4xl text-stone-400 mb-2">cloud_upload</span>
-                        <p class="text-sm font-label font-bold text-stone-700">Choose files or drag them here</p>
-                        <p class="text-xs text-stone-400 mt-1">Images are compressed automatically to WebP/JPEG format on upload.</p>
+                        <span class="material-symbols-outlined text-3xl md:text-4xl text-stone-400 mb-1">cloud_upload</span>
+                        <p class="text-xs md:text-sm font-label font-bold text-stone-700">Choose files or drag them here</p>
+                        <p class="text-[10px] md:text-xs text-stone-400 mt-1">Images are compressed automatically to WebP/JPEG format on upload.</p>
                     </div>
 
                     <!-- Images List with sorting -->
-                    <div id="images-manager-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+                    <div id="images-manager-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 pt-1">
                         <!-- Loaded images injected here -->
                     </div>
                 </div>
 
-                <div class="flex justify-end gap-3 border-t border-stone-100 pt-4">
-                    <button type="button" class="px-4 py-2 bg-stone-100 text-stone-700 hover:bg-stone-200 rounded text-sm font-medium close-modal-btn">Cancel</button>
-                    <button type="submit" id="save-product-btn" class="px-5 py-2 bg-primary hover:bg-primary-dark text-white rounded text-sm font-medium flex items-center gap-2">
+                <div class="flex justify-end gap-3 border-t border-stone-100 pt-4 mt-2">
+                    <button type="button" class="px-4 py-2 bg-stone-100 text-stone-700 hover:bg-stone-200 rounded text-xs md:text-sm font-medium close-modal-btn">Cancel</button>
+                    <button type="submit" id="save-product-btn" class="px-5 py-2 bg-primary hover:bg-primary-dark text-white rounded text-xs md:text-sm font-medium flex items-center gap-2">
                         Save Product
                     </button>
                 </div>

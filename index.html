@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>ILIKA SHADES - Luxury for Every Room</title>
+    <meta name="description" content="ILIKA SHADES offers premium curtains, mattresses, pillows, carpets, and blinds. Experience luxury home furnishing since 2014.">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="ILIKA SHADES - Luxury for Every Room">
+    <meta property="og:description" content="Premium home furnishing showroom specializing in curtains, mattresses, carpets, and blinds.">
+    <meta property="og:url" content="https://www.ilikashades.com/">
+    <meta property="og:type" content="website">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "ILIKA SHADES",
+      "image": "https://www.ilikashades.com/images/placeholder.jpg",
+      "url": "https://www.ilikashades.com/",
+      "telephone": "+919876543210",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Furnishing Lane",
+        "addressLocality": "City Center",
+        "addressCountry": "IN"
+      }
+    }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700;900&amp;family=Inter:wght@300;400;500;600&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B6F47',
+                        'primary-dark': '#735B39',
+                        'primary-container': '#E8DCCF',
+                        'on-primary-container': '#4A3B24',
+                        secondary: '#C4A882',
+                        'surface': '#F5F0EB',
+                        'surface-variant': '#E5DED5',
+                        'on-surface': '#2C2825',
+                        'on-surface-variant': '#5A544F',
+                        'surface-container-highest': '#1A1816',
+                        'whatsapp': '#25D366',
+                        'whatsapp-dark': '#1EAE53'
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Public Sans", "sans-serif"],
+                        "display": ["Public Sans", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"]
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        .pulse-whatsapp { animation: pulse-wa 2s infinite; }
+        @keyframes pulse-wa {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        }
+        .text-balance { text-wrap: balance; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+    <!-- Supabase Integration Client scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+    <!-- Navigation Bar -->
+    <nav class="bg-surface/90 backdrop-blur-md full-width top-0 sticky border-b border-surface-variant shadow-sm z-40 transition-all duration-300" id="top-nav">
+        <div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+            <a class="text-2xl font-display font-black text-primary tracking-tighter hover:opacity-80 transition-opacity" href="index.html">ILIKA SHADES</a>
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-label text-sm text-primary font-bold border-b-2 border-primary pb-1" href="index.html">Home</a>
+                <a class="font-label text-sm text-on-surface-variant hover:text-primary transition-colors hover:bg-primary/5 px-2 py-1 rounded" href="about.html">About</a>
+                <a class="font-label text-sm text-on-surface-variant hover:text-primary transition-colors hover:bg-primary/5 px-2 py-1 rounded" href="products.html">Products</a>
+                <a class="font-label text-sm text-on-surface-variant hover:text-primary transition-colors hover:bg-primary/5 px-2 py-1 rounded" href="contact.html">Contact</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="products.html" class="text-on-surface-variant hover:text-primary transition-colors hidden md:block">
+                    <span class="material-symbols-outlined">search</span>
+                </a>
+                <button class="text-on-surface hover:text-primary transition-colors md:hidden" id="mobile-menu-toggle">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div class="md:hidden hidden bg-surface border-t border-surface-variant w-full shadow-lg" id="mobile-menu-dropdown">
+            <div class="flex flex-col p-6 space-y-4 font-label">
+                <a class="text-primary font-bold py-2 border-b border-surface-variant/20" href="index.html">Home</a>
+                <a class="text-on-surface-variant hover:text-primary py-2 border-b border-surface-variant/20" href="about.html">About</a>
+                <a class="text-on-surface-variant hover:text-primary py-2 border-b border-surface-variant/20" href="products.html">Products</a>
+                <a class="text-on-surface-variant hover:text-primary py-2" href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <header class="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        <div id="hero-banner" class="absolute inset-0 z-0 bg-cover bg-center transition-all duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuByTwilEA0ISVwjm_oBlGSE2K8xOB8OFY2p8iblzARzjvANhri_E4G9dV1sNCYLA63z7iUgEKdxsF59NtiyLTVwoIUvRlLkmr2riYJziCEWJac4wIPq7koFVZazfCx17sCUJjdzgImCdmxEeLeyPski7GKDDziTQdGIhvAg9tD3h-MlExJfcTIfYmEunmcRGNKgC_-g17Ab6REwKuH-CsXjwCkcToVChCiU2_rereGbL-d8a0Gj7Mfuqre9lHv-yprllfwnd70TdjtE');"></div>
+        <div class="absolute inset-0 z-10 bg-gradient-to-t from-surface via-surface/80 to-black/40"></div>
+        <div class="relative z-20 max-w-4xl mx-auto px-6 text-center py-20">
+            <span class="inline-block py-1 px-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-label text-xs tracking-wider uppercase mb-6 backdrop-blur-sm">Est. 2014</span>
+            <h1 id="hero-title" class="font-headline text-5xl md:text-7xl font-bold text-on-surface mb-4 tracking-tight drop-shadow-sm">ILIKA SHADES</h1>
+            <p id="hero-tagline" class="font-display text-2xl md:text-3xl text-primary font-medium mb-6 drop-shadow-sm text-balance">Luxury for Every Room</p>
+            <p class="font-body text-lg text-on-surface-variant mb-10 max-w-2xl mx-auto text-balance">Premium curtains, mattresses, pillows, carpets &amp; blinds — transforming spaces with elegance since 2014.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a class="bg-primary hover:bg-primary-dark text-surface font-label font-medium py-3 px-8 min-h-[44px] min-w-[44px] rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group w-full sm:w-auto" href="#featured">
+                    Explore Collection
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+                <a id="hero-whatsapp" class="bg-whatsapp hover:bg-whatsapp-dark text-white font-label font-medium py-3 px-8 min-h-[44px] min-w-[44px] rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group w-full sm:w-auto" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website." target="_blank">
+                    <svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.88-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
+                    WhatsApp Inquiry
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Featured Products -->
+    <section class="py-24 px-6 max-w-7xl mx-auto" id="featured">
+        <div class="text-center mb-16">
+            <h2 class="font-headline text-3xl md:text-4xl font-bold text-on-surface mb-4">Featured Collection</h2>
+            <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+            <p class="font-body text-on-surface-variant mt-4 max-w-2xl mx-auto">Discover our most sought-after luxury pieces, handpicked for exceptional quality.</p>
+        </div>
+        <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:pb-0 hide-scrollbar" id="featured-grid">
+            <!-- Product Card 1 -->
+            <div class="min-w-[85vw] snap-center md:min-w-0 bg-white rounded-xl shadow-sm border border-surface-variant overflow-hidden group hover:shadow-md transition-all duration-300 flex flex-col h-full animate-pulse">
+                <div class="aspect-[4/3] bg-stone-200"></div>
+                <div class="p-6 flex flex-col flex-grow space-y-3">
+                    <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+                    <div class="h-6 bg-stone-200 rounded w-1/3"></div>
+                    <div class="h-12 bg-stone-200 rounded-xl w-full mt-auto"></div>
+                </div>
+            </div>
+            <!-- Product Card 2 -->
+            <div class="min-w-[85vw] snap-center md:min-w-0 bg-white rounded-xl shadow-sm border border-surface-variant overflow-hidden group hover:shadow-md transition-all duration-300 flex flex-col h-full animate-pulse">
+                <div class="aspect-[4/3] bg-stone-200"></div>
+                <div class="p-6 flex flex-col flex-grow space-y-3">
+                    <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+                    <div class="h-6 bg-stone-200 rounded w-1/3"></div>
+                    <div class="h-12 bg-stone-200 rounded-xl w-full mt-auto"></div>
+                </div>
+            </div>
+            <!-- Product Card 3 -->
+            <div class="min-w-[85vw] snap-center md:min-w-0 bg-white rounded-xl shadow-sm border border-surface-variant overflow-hidden group hover:shadow-md transition-all duration-300 flex flex-col h-full animate-pulse">
+                <div class="aspect-[4/3] bg-stone-200"></div>
+                <div class="p-6 flex flex-col flex-grow space-y-3">
+                    <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+                    <div class="h-6 bg-stone-200 rounded w-1/3"></div>
+                    <div class="h-12 bg-stone-200 rounded-xl w-full mt-auto"></div>
+                </div>
+            </div>
+            <!-- Product Card 4 -->
+            <div class="min-w-[85vw] snap-center md:min-w-0 bg-white rounded-xl shadow-sm border border-surface-variant overflow-hidden group hover:shadow-md transition-all duration-300 flex flex-col h-full animate-pulse">
+                <div class="aspect-[4/3] bg-stone-200"></div>
+                <div class="p-6 flex flex-col flex-grow space-y-3">
+                    <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+                    <div class="h-6 bg-stone-200 rounded w-1/3"></div>
+                    <div class="h-12 bg-stone-200 rounded-xl w-full mt-auto"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 bg-surface-variant/30 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="font-label text-sm font-bold tracking-widest text-primary uppercase mb-3 block">Why Choose Us</span>
+                <h2 class="font-headline text-3xl md:text-4xl font-bold text-on-surface">Experience Excellence in Furnishing</h2>
+                <div class="w-16 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm shadow-stone-200/50 hover:shadow-md transition-shadow">
+                    <span class="material-symbols-outlined text-4xl text-primary mb-4 block">verified</span>
+                    <h3 class="font-headline text-xl font-bold text-on-surface mb-2">Premium Quality</h3>
+                    <p class="font-body text-sm text-on-surface-variant">Every fabric and layout selected to meet the highest aesthetic standards.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm shadow-stone-200/50 hover:shadow-md transition-shadow">
+                    <span class="material-symbols-outlined text-4xl text-primary mb-4 block">support_agent</span>
+                    <h3 class="font-headline text-xl font-bold text-on-surface mb-2">Expert Consultation</h3>
+                    <p class="font-body text-sm text-on-surface-variant">Our consultants help choose colors and textures that align with your lifestyle.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm shadow-stone-200/50 hover:shadow-md transition-shadow">
+                    <span class="material-symbols-outlined text-4xl text-primary mb-4 block">view_cozy</span>
+                    <h3 class="font-headline text-xl font-bold text-on-surface mb-2">Wide Selection</h3>
+                    <p class="font-body text-sm text-on-surface-variant">An extensive curated catalogue of curtains, pillows, and carpets.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm shadow-stone-200/50 hover:shadow-md transition-shadow">
+                    <span class="material-symbols-outlined text-4xl text-primary mb-4 block">payments</span>
+                    <h3 class="font-headline text-xl font-bold text-on-surface mb-2">Fair Pricing</h3>
+                    <p class="font-body text-sm text-on-surface-variant">Premium luxurious products curated without unreasonable price tags.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-highest text-surface py-12 px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-8">
+            <div class="mb-6 md:mb-0">
+                <a class="text-2xl font-display font-bold text-primary block mb-2 tracking-tighter" href="index.html">ILIKA SHADES</a>
+                <p class="font-body text-sm text-surface/70 max-w-xs">Luxury for Every Room. Premium home furnishings since 2014.</p>
+            </div>
+            <div class="flex flex-wrap gap-6 font-body text-sm mb-6 md:mb-0">
+                <a class="text-surface/80 hover:text-primary transition-colors" href="index.html">Home</a>
+                <a class="text-surface/80 hover:text-primary transition-colors" href="about.html">About</a>
+                <a class="text-surface/80 hover:text-primary transition-colors" href="products.html">Products</a>
+                <a class="text-surface/80 hover:text-primary transition-colors" href="contact.html">Contact</a>
+            </div>
+            <div class="font-body text-sm text-surface/50 text-left md:text-right">
+                <p>© 2026 ILIKA SHADES. All rights reserved.</p>
+                <p class="mt-1" id="footer-address">123 Furnishing Lane, City Center</p>
+                <a href="admin/login.html" id="admin-access-link" class="hidden hover:text-primary transition-colors mt-2 text-primary font-bold">Admin Access</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Only Bottom Navbar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-[72px] pb-safe bg-primary shadow-[0_-10px_40px_rgba(0,0,0,0.15)] md:hidden">
+        <a id="mob-call" class="flex flex-col items-center justify-center text-on-primary/80 hover:bg-primary-container/10 flex-1 h-full transition-colors min-h-[44px]" href="tel:+919876543210">
+            <span class="material-symbols-outlined mb-1 text-xl">call</span>
+            <span class="font-label text-[10px]">Call</span>
+        </a>
+        <a id="mob-whatsapp" class="flex flex-col items-center justify-center text-on-primary font-bold hover:bg-primary-container/10 flex-1 h-full transition-colors relative min-h-[44px]" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website.">
+            <span class="absolute top-3 right-6 w-2 h-2 bg-whatsapp rounded-full animate-ping"></span>
+            <span class="material-symbols-outlined mb-1 text-xl">chat</span>
+            <span class="font-label text-[10px]">WhatsApp</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-primary/80 hover:bg-primary-container/10 flex-1 h-full transition-colors" href="contact.html">
+            <span class="material-symbols-outlined mb-1 text-xl">location_on</span>
+            <span class="font-label text-[10px]">Location</span>
+        </a>
+        <a id="mob-email" class="flex flex-col items-center justify-center text-on-primary/80 hover:bg-primary-container/10 flex-1 h-full transition-colors" href="mailto:info@ilikashades.com">
+            <span class="material-symbols-outlined mb-1 text-xl">mail</span>
+            <span class="font-label text-[10px]">Email</span>
+        </a>
+    </nav>
+
+    <!-- Floating WhatsApp Button (Desktop) -->
+    <a id="floating-whatsapp" aria-label="Chat on WhatsApp" class="fixed bottom-8 right-8 z-50 bg-whatsapp hover:bg-whatsapp-dark text-white p-4 rounded-full shadow-xl transition-transform hover:scale-110 pulse-whatsapp hidden md:flex items-center justify-center group min-h-[44px] min-w-[44px]" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website." target="_blank">
+        <svg class="w-8 h-8 fill-current" viewbox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.88-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
+        <span class="absolute right-full mr-4 bg-black/80 text-white font-label text-xs py-1 px-3 rounded-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Message Us</span>
+    </a>
+    
+    <!-- Spacer for Mobile Nav -->
+    <div class="h-16 md:hidden"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const dropdown = document.getElementById('mobile-menu-dropdown');
+            if (toggle && dropdown) {
+                toggle.addEventListener('click', () => {
+                    dropdown.classList.toggle('hidden');
+                    const icon = toggle.querySelector('span');
+                    if (dropdown.classList.contains('hidden')) {
+                        icon.textContent = 'menu';
+                    } else {
+                        icon.textContent = 'close';
+                    }
+                });
+            }
+        });
+
+        // Initialize Supabase integrations
+        document.addEventListener('ilika-init', async () => {
+            const client = window.ilika;
+            if (!client) return;
+
+            // 1. Fetch & update BusinessInfo configs
+            const info = await client.getBusinessInfo();
+            if (info) {
+                const heroBanner = document.getElementById('hero-banner');
+                const heroTitle = document.getElementById('hero-title');
+                const heroTagline = document.getElementById('hero-tagline');
+                const heroWA = document.getElementById('hero-whatsapp');
+                const floatingWA = document.getElementById('floating-whatsapp');
+                const mobCall = document.getElementById('mob-call');
+                const mobWA = document.getElementById('mob-whatsapp');
+                const footerAddress = document.getElementById('footer-address');
+
+                if (heroBanner && info.hero_banner) heroBanner.style.backgroundImage = `url('${info.hero_banner}')`;
+                if (heroTitle) heroTitle.textContent = info.hero_title;
+                if (heroTagline) heroTagline.textContent = info.hero_tagline;
+
+                const cleanWa = info.whatsapp.replace(/[^0-9]/g, '');
+                const defaultMsg = encodeURIComponent("Hi ILIKA SHADES, I'm reaching out from your website.");
+                if (heroWA) heroWA.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+                if (floatingWA) floatingWA.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+                if (mobCall) mobCall.href = `tel:${info.phone}`;
+                if (mobWA) mobWA.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+                if (footerAddress) footerAddress.textContent = info.address;
+            }
+
+            // 2. Fetch Featured Products
+            const grid = document.getElementById('featured-grid');
+            if (grid) {
+                const productsList = await client.getProducts({ featured: true });
+                grid.innerHTML = '';
+                
+                const displayItems = productsList.slice(0, 4);
+                if (displayItems.length === 0) {
+                    grid.innerHTML = '<div class="col-span-full text-center text-stone-400 py-8">No featured products currently shown.</div>';
+                    return;
+                }
+
+                displayItems.forEach(p => {
+                    const imgUrl = p.product_images && p.product_images.length > 0 
+                        ? p.product_images[0].image_url 
+                        : 'images/placeholder.jpg';
+                    const cleanPhone = info ? info.whatsapp.replace(/[^0-9]/g, '') : '919876543210';
+                    const waLink = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hi ILIKA SHADES, I'm interested in: ${p.name}`)}`;
+
+                    const card = document.createElement('div');
+                    card.className = "min-w-[85vw] snap-center md:min-w-0 bg-white rounded-xl shadow-sm shadow-stone-200/50 border border-surface-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col h-full";
+                    card.innerHTML = `
+                        <div class="aspect-[4/3] bg-surface overflow-hidden relative">
+                            <img src="${imgUrl}" alt="${p.name}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-headline font-bold text-lg text-on-surface mb-1">${p.name}</h3>
+                            <p class="font-display font-black text-xl text-primary mb-3">₹${parseFloat(p.price).toLocaleString('en-IN')}</p>
+                            <p class="font-body text-sm text-on-surface-variant mb-6 flex-grow">${p.description || ''}</p>
+                            <a class="w-full bg-surface-variant hover:bg-whatsapp hover:text-white text-on-surface font-label text-sm font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 group/btn mt-auto min-h-[44px]" href="${waLink}" target="_blank">
+                                <span class="material-symbols-outlined text-[18px]">chat</span>
+                                Inquire on WhatsApp
+                            </a>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        });
+
+        // Admin Access Route Check
+        if (window.location.search.includes('admin=true')) {
+            const adminLink = document.getElementById('admin-access-link');
+            if (adminLink) adminLink.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

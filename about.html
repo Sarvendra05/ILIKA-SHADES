@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>About Us | ILIKA SHADES</title>
+    <meta name="description" content="Learn about ILIKA SHADES, crafting comfort and elegance in luxury home furnishings since 2014.">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="About Us | ILIKA SHADES">
+    <meta property="og:description" content="Discover our heritage, mission, and dedication to premium quality curtains, mattresses, and carpets.">
+    <meta property="og:url" content="https://www.ilikashades.com/about.html">
+    <meta property="og:type" content="website">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&amp;family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#8B6F47', // Bronze
+                            container: '#F0EBE1',
+                        },
+                        secondary: {
+                            DEFAULT: '#C4A882', // Gold sand
+                            container: '#FDF8F0',
+                        },
+                        accent: {
+                            DEFAULT: '#25D366', // WhatsApp Green
+                            hover: '#1EBE5C',
+                        },
+                        surface: {
+                            DEFAULT: '#F5F5F0', // Warm neutral palette
+                            variant: '#EAEAE5',
+                            'container-highest': '#1C1917', // Dark warm for footer
+                        },
+                        'on-surface': {
+                            DEFAULT: '#292524',
+                            variant: '#57534E',
+                        },
+                        outline: {
+                            variant: '#D6D3D1',
+                        }
+                    },
+                    fontFamily: {
+                        headline: ['Playfair Display', 'serif'],
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                        label: ['DM Sans', 'sans-serif']
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        "lg": "0.5rem", // 8px rounded corners
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                        'premium': '0 10px 30px -10px rgba(139, 111, 71, 0.1)',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            }
+            .material-symbols-outlined.fill {
+                font-variation-settings: 'FILL' 1;
+            }
+        }
+        
+        /* Subtle pattern background for mission section */
+        .bg-pattern {
+            background-image: radial-gradient(#C4A882 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-color: #F5F5F0;
+        }
+    </style>
+    <!-- Supabase Integration Client scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body class="font-body bg-surface text-on-surface antialiased selection:bg-primary/20 selection:text-primary overflow-x-hidden opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-300" id="main-nav">
+        <div class="flex justify-between items-center px-6 md:px-12 py-4 w-full max-w-full mx-auto">
+            <!-- Brand -->
+            <a class="font-headline text-2xl font-bold text-primary tracking-tight" href="index.html">ILIKA SHADES</a>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="font-body text-body-md text-on-surface hover:text-primary transition-colors hover:text-secondary transition-all" href="index.html">Home</a>
+                <a class="font-body text-body-md text-primary font-bold border-b-2 border-primary pb-1 hover:text-secondary transition-all" href="about.html">About</a>
+                <a class="font-body text-body-md text-on-surface hover:text-primary transition-colors hover:text-secondary transition-all" href="products.html">Products</a>
+                <a class="font-body text-body-md text-on-surface hover:text-primary transition-colors hover:text-secondary transition-all" href="contact.html">Contact</a>
+            </div>
+            <!-- Mobile Menu Toggle -->
+            <button aria-label="Toggle Menu" class="md:hidden text-primary p-2" id="mobile-menu-btn">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+        <!-- Mobile Nav (Hidden by default) -->
+        <div class="md:hidden hidden bg-surface border-t border-outline-variant/30 absolute w-full left-0 top-full shadow-lg" id="mobile-menu">
+            <div class="flex flex-col p-6 space-y-4">
+                <a class="font-body text-body-md text-on-surface hover:text-primary py-2 border-b border-outline-variant/20" href="index.html">Home</a>
+                <a class="font-body text-body-md text-primary font-bold py-2 border-b border-outline-variant/20" href="about.html">About</a>
+                <a class="font-body text-body-md text-on-surface hover:text-primary py-2 border-b border-outline-variant/20" href="products.html">Products</a>
+                <a class="font-body text-body-md text-on-surface hover:text-primary py-2" href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-[76px] lg:pt-[84px]">
+        <!-- Page Hero -->
+        <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaDfxfcKPhIOpqfmfzq5Y1-OxtkE66SyVotmSJzwZYlLfgWBSXO-XyFT-H6Sqq-gECjX04QGRSrtAqgXAbJ5Qxufh1WssuxUfhxAo8h3F1elNOCeSt-FuobbHyX-k-3RZjKSSBK7QmQJKRmkLQUP4CMLBORl1n8YERY_nJkxtqKQjfy0-5MIkqkJ0wYgpYdN0Cg6O7sSQk_76ymh8sHkEfta0oVjW1eUzbCjkL3otGcFQI9hbRvGrGTuyFiAi6voYaDG_ExgvjNgd7"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+            </div>
+            <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+                <h1 class="font-headline text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-md tracking-tight">Our Story</h1>
+                <p class="font-body text-xl md:text-2xl text-white/90 font-light tracking-wide max-w-2xl mx-auto">Crafting Comfort &amp; Elegance Since 2014</p>
+                <div class="w-24 h-1 bg-primary mx-auto mt-8 rounded-full"></div>
+            </div>
+        </section>
+
+        <!-- Brand Story -->
+        <section class="py-20 md:py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-primary/10 rounded-lg transform rotate-2 transition-transform group-hover:rotate-3 duration-500"></div>
+                    <img alt="" loading="lazy" decoding="async" class="relative rounded-xl shadow-premium w-full object-cover aspect-[4/5] object-center z-10 transition-transform duration-700 group-hover:scale-[1.02]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqKJnQvOxqNF22Hjr_JpTur9tCLhqb8ogR40nxrt0o7FH5xAOcL6TWPrVvHYbgcNif58ksGdCUjJudRlffpmVFybSWbYCSQifyAKPINQvA5x7AuvDAKd_To6u5_SKgYbej1VjYRii4tC-WdT0wVZ4ZdrSR1oTfY2BizLdVriZCyniGQamMZjf22OKhWS5RckkofgjWmAxIBX5Stuuo_m_q4dSzQUvT2UM_SGIvw7hsqbAxdD9HO-SryCItm-QuRq8wkmqI9v0kKANU"/>
+                </div>
+                <div class="space-y-8">
+                    <div>
+                        <span class="font-label text-sm font-bold tracking-widest text-primary uppercase mb-3 block">Heritage</span>
+                        <h2 class="font-headline text-4xl md:text-5xl font-bold text-on-surface leading-tight">About ILIKA SHADES</h2>
+                    </div>
+                    <div id="about-us-content" class="space-y-6 font-body text-on-surface-variant text-lg leading-relaxed">
+                        <!-- Loaded dynamically -->
+                        <div class="animate-pulse space-y-3">
+                            <div class="h-4 bg-stone-200 rounded w-full"></div>
+                            <div class="h-4 bg-stone-200 rounded w-5/6"></div>
+                            <div class="h-4 bg-stone-200 rounded w-4/5"></div>
+                        </div>
+                    </div>
+                    <div class="pt-4">
+                        <img alt="Founder Signature placeholder" class="h-16 opacity-60 mix-blend-multiply filter invert-[.3] sepia-[.8] saturate-[3] hue-rotate-[350deg] contrast-[.9]" data-alt="A stylized cursive signature in bronze ink, denoting luxury and personal touch." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcAH-k2if1Uy8xcCrOBk1uoCXX6zdJBfsV6li9XXuq35PX5ZiXFXTOwK3AiGXwHD9Zwaw0-1ivuFZjtNqv_8DbqwyGeySrHNqE3GPcP4q9WPBTw5kXWzjiswOMJ8NkUIQRVAugbeIUN7VMFbu3m_LUHojXcuGcyWCwvgraxiR__RrjvpYMh-U3DOrcwgut_sIF-r8mEnmJa5qB_EMKZhltseGXp3alx7gdYzfa-q0XYNtISOhK3mGm4pbxhmWDDePLibvU2H9HeVJt" style="pointer-events: none;"/>
+                        <p class="font-label text-sm text-on-surface-variant mt-2">Founder &amp; Lead Curator</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Statement -->
+        <section class="py-24 bg-pattern relative border-y border-outline-variant/30">
+            <div class="absolute inset-0 bg-surface/80 backdrop-blur-[2px]"></div>
+            <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+                <span class="material-symbols-outlined text-5xl text-primary/40 mb-6 block">format_quote</span>
+                <p class="font-headline text-3xl md:text-4xl lg:text-5xl leading-tight text-on-surface font-medium italic">
+                    "Our mission is to make luxury accessible — providing premium furnishing solutions with personalized service, expert guidance, and uncompromising quality."
+                </p>
+                <div class="w-16 h-0.5 bg-primary mx-auto mt-12 rounded-full"></div>
+            </div>
+        </section>
+
+        <!-- Stats (A Decade of Excellence) -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="text-center mb-16">
+                    <h3 class="font-headline text-3xl font-bold text-on-surface">A Decade of Excellence</h3>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 divide-x-0 md:divide-x divide-outline-variant/40">
+                    <div class="text-center px-4">
+                        <p class="font-headline text-5xl md:text-6xl font-bold text-primary mb-2">10<span class="text-3xl">+</span></p>
+                        <p class="font-label text-xs md:text-sm uppercase tracking-wider text-on-surface-variant font-bold">Years of Experience</p>
+                    </div>
+                    <div class="text-center px-4">
+                        <p class="font-headline text-5xl md:text-6xl font-bold text-primary mb-2">1000<span class="text-3xl">+</span></p>
+                        <p class="font-label text-xs md:text-sm uppercase tracking-wider text-on-surface-variant font-bold">Happy Customers</p>
+                    </div>
+                    <div class="text-center px-4">
+                        <p class="font-headline text-5xl md:text-6xl font-bold text-primary mb-2">5000<span class="text-3xl">+</span></p>
+                        <p class="font-label text-xs md:text-sm uppercase tracking-wider text-on-surface-variant font-bold">Products Available</p>
+                    </div>
+                    <div class="text-center px-4">
+                        <p class="font-headline text-5xl md:text-6xl font-bold text-primary mb-2">50<span class="text-3xl">+</span></p>
+                        <p class="font-label text-xs md:text-sm uppercase tracking-wider text-on-surface-variant font-bold">Premium Brands</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Values -->
+        <section class="py-24 bg-surface-variant/30">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="text-center mb-16 space-y-4">
+                    <span class="font-label text-sm font-bold tracking-widest text-primary uppercase">Principles</span>
+                    <h2 class="font-headline text-4xl font-bold text-on-surface">What We Stand For</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Value Card 1 -->
+                    <div class="bg-white p-10 rounded-lg shadow-sm hover:shadow-premium transition-all duration-300 border border-outline-variant/20 group">
+                        <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                            <span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors duration-300">verified</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-on-surface mb-4">Quality Assurance</h3>
+                        <p class="font-body text-on-surface-variant leading-relaxed">
+                            Every fabric, texture, and piece in our collection undergoes rigorous quality checks. We partner only with mills and manufacturers who share our obsession with durability and flawless finish.
+                        </p>
+                    </div>
+                    <!-- Value Card 2 -->
+                    <div class="bg-white p-10 rounded-lg shadow-sm hover:shadow-premium transition-all duration-300 border border-outline-variant/20 group">
+                        <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                            <span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors duration-300">favorite</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-on-surface mb-4">Customer First</h3>
+                        <p class="font-body text-on-surface-variant leading-relaxed">
+                            Your home is personal. We listen deeply to your preferences and lifestyle needs, ensuring every recommendation feels tailormade to create the exact ambiance you desire.
+                        </p>
+                    </div>
+                    <!-- Value Card 3 -->
+                    <div class="bg-white p-10 rounded-lg shadow-sm hover:shadow-premium transition-all duration-300 border border-outline-variant/20 group">
+                        <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                            <span class="material-symbols-outlined text-3xl text-primary group-hover:text-white transition-colors duration-300">support_agent</span>
+                        </div>
+                        <h3 class="font-headline text-2xl font-bold text-on-surface mb-4">Expert Guidance</h3>
+                        <p class="font-body text-on-surface-variant leading-relaxed">
+                            Our consultants are specialists in spatial aesthetics and material science. From window treatments to upholstery, we provide professional insights to elevate your interior design.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Showroom Section -->
+        <section class="relative py-32 flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVnTTr9_taVkRX0RfY79gbCZX_DcCCz6AR3cs34LbKqqywGp18tcC7SzV5X_nnP19bX80P5HWIH1ejP7XXTJyYaI90oU0QkusF5qYOLuS4cF0inmf0wnsM6S-jbMLzLXAHOo7yh_oSfVj0qc__Pz8m4npUa7YnvTqUNRGPRe8h9YXRJvQZgCDGYH6anSdRr6Rix_tCkuybfT3utAkh1TYOSviNv_SF5Cgob84FGjOo0YjDpnF6ZWCallxkXQwtIcrQl86o1N3uYj4C"/>
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
+            </div>
+            <div class="relative z-10 text-center px-4 max-w-3xl mx-auto space-y-8 p-12 rounded-lg border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl">
+                <h2 class="font-headline text-4xl md:text-5xl font-bold text-white leading-tight">Visit Our Showroom</h2>
+                <p class="font-body text-lg text-white/80">Experience the textures, see the colors in true light, and consult with our experts in person to find the perfect additions to your home.</p>
+                <div class="pt-4">
+                    <a id="showroom-whatsapp" class="inline-flex items-center justify-center space-x-3 bg-accent hover:bg-accent-hover text-white px-8 py-4 min-h-[44px] rounded-full font-label font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-accent/30" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website.">
+                        <span class="material-symbols-outlined fill">chat</span>
+                        <span>Inquire on WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-highest w-full border-t border-outline-variant/20">
+        <div class="flex flex-col md:flex-row justify-between items-start p-10 md:px-20 w-full max-w-7xl mx-auto gap-10 text-stone-300">
+            <!-- Brand Info -->
+            <div class="space-y-4 max-w-xs">
+                <span class="font-headline text-xl font-bold text-primary">ILIKA SHADES</span>
+                <p class="font-body text-sm text-stone-400">Luxury for Every Room. Premium home furnishings since 2014.</p>
+            </div>
+            <!-- Links -->
+            <div class="grid grid-cols-2 gap-x-12 gap-y-3">
+                <a class="font-body text-sm text-stone-400 hover:text-primary transition-all duration-300" href="index.html">Home</a>
+                <a class="font-body text-sm text-primary font-medium transition-all duration-300 font-bold" href="about.html">About</a>
+                <a class="font-body text-sm text-stone-400 hover:text-primary transition-all duration-300" href="products.html">Products</a>
+                <a class="font-body text-sm text-stone-400 hover:text-primary transition-all duration-300" href="contact.html">Contact</a>
+            </div>
+        </div>
+        <!-- Copyright -->
+        <div class="border-t border-white/10 px-10 md:px-20 py-6 text-center md:text-left text-stone-500 text-xs flex justify-between items-center">
+            <p>© 2026 ILIKA SHADES. All rights reserved.</p>
+            <a href="admin/login.html" id="admin-access-link" class="hidden hover:text-primary transition-colors text-primary font-bold">Admin Access</a>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a id="floating-whatsapp" aria-label="Chat on WhatsApp" class="fixed bottom-6 right-6 z-50 bg-accent hover:bg-accent-hover text-white w-14 h-14 min-h-[44px] min-w-[44px] rounded-full flex items-center justify-center shadow-lg shadow-accent/40 transition-transform hover:scale-110 duration-300 animate-pulse-slow" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website.">
+        <span class="material-symbols-outlined text-3xl fill">chat</span>
+    </a>
+    
+    <style>
+        /* Custom Keyframes for gentle pulse */
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite;
+        }
+    </style>
+    <script>
+        // Simple JS for Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const nav = document.getElementById('main-nav');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    
+                    // Change icon
+                    const icon = menuBtn.querySelector('span');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.textContent = 'menu';
+                    } else {
+                        icon.textContent = 'close';
+                    }
+                });
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    nav.classList.add('shadow-md', 'bg-surface/95');
+                    nav.classList.remove('bg-surface/80');
+                } else {
+                    nav.classList.remove('shadow-md', 'bg-surface/95');
+                    nav.classList.add('bg-surface/80');
+                }
+            });
+        });
+
+        // Initialize Supabase dynamic values
+        document.addEventListener('ilika-init', async () => {
+            const client = window.ilika;
+            if (!client) return;
+
+            const info = await client.getBusinessInfo();
+            if (info) {
+                const aboutBox = document.getElementById('about-us-content');
+                if (aboutBox) {
+                    aboutBox.innerHTML = '';
+                    // Split content by newlines to render separate paragraphs nicely
+                    const paragraphs = info.about_us.split('\n');
+                    paragraphs.forEach(pText => {
+                        if (pText.trim()) {
+                            const pEl = document.createElement('p');
+                            pEl.textContent = pText.trim();
+                            aboutBox.appendChild(pEl);
+                        }
+                    });
+                }
+
+                // Update WhatsApp redirects
+                const cleanWa = info.whatsapp.replace(/[^0-9]/g, '');
+                const floatingWA = document.getElementById('floating-whatsapp');
+                const showroomWA = document.getElementById('showroom-whatsapp');
+
+                const defaultMsg = encodeURIComponent("Hi ILIKA SHADES, I'm reaching out from your website.");
+                if (floatingWA) floatingWA.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+                if (showroomWA) showroomWA.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+            }
+        });
+
+        // Admin Access Route Check
+        if (window.location.search.includes('admin=true')) {
+            const adminLink = document.getElementById('admin-access-link');
+            if (adminLink) adminLink.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

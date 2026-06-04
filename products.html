@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Our Collection - ILIKA SHADES</title>
+    <meta name="description" content="Explore our premium collection of curtains, mattresses, pillows, carpets, and blinds.">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Our Collection - ILIKA SHADES">
+    <meta property="og:description" content="Discover premium luxury home furnishings for every room.">
+    <meta property="og:url" content="https://www.ilikashades.com/products.html">
+    <meta property="og:type" content="website">
+    <!-- Structured Data ItemList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "ILIKA SHADES Products",
+      "description": "Premium luxury home furnishings.",
+      "url": "https://www.ilikashades.com/products.html"
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;family=Inter:wght@100..900&amp;family=DM+Sans:ital,wght@0,400..1000;1,400..1000&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: "#8B6F47",
+                            hover: "#725B3A"
+                        },
+                        secondary: {
+                            DEFAULT: "#C4A882",
+                        },
+                        accent: {
+                            DEFAULT: "#5C7A6B",
+                        },
+                        whatsapp: {
+                            DEFAULT: "#25D366",
+                            hover: "#20bd5c"
+                        },
+                        surface: {
+                            DEFAULT: "#F5F0EB",
+                            dark: "#2A2520",
+                            container: {
+                                highest: "#3D352D"
+                            }
+                        },
+                        text: {
+                            primary: "#2A2520",
+                            secondary: "#4A423A",
+                            light: "#F5F0EB"
+                        }
+                    },
+                    fontFamily: {
+                        headline: ["Public Sans", "sans-serif"],
+                        display: ["Public Sans", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["DM Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <!-- Supabase Integration Client scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body class="bg-surface font-body text-text-primary antialiased selection:bg-secondary selection:text-white pt-20 overflow-x-hidden opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-gray-200/50 shadow-sm transition-all duration-300" id="main-nav">
+        <div class="flex justify-between items-center px-6 md:px-12 py-4 w-full max-w-7xl mx-auto">
+            <a class="font-headline text-2xl font-bold text-primary tracking-tight" href="index.html">ILIKA SHADES</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-text-primary hover:text-secondary transition-colors font-body text-body-md" href="index.html">Home</a>
+                <a class="text-text-primary hover:text-secondary transition-colors font-body text-body-md" href="about.html">About</a>
+                <a class="text-primary font-bold border-b-2 border-primary pb-1 font-body text-body-md" href="products.html">Products</a>
+                <a class="text-text-primary hover:text-secondary transition-colors font-body text-body-md" href="contact.html">Contact</a>
+            </div>
+            <button class="md:hidden text-text-primary hover:text-secondary transition-colors" id="mobile-menu-btn">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+        <!-- Mobile Nav -->
+        <div class="md:hidden hidden bg-surface border-t border-gray-200/50 absolute w-full left-0 top-full shadow-lg" id="mobile-menu">
+            <div class="flex flex-col p-6 space-y-4 font-label">
+                <a class="text-text-primary hover:text-secondary py-2 border-b border-gray-200/10" href="index.html">Home</a>
+                <a class="text-text-primary hover:text-secondary py-2 border-b border-gray-200/10" href="about.html">About</a>
+                <a class="text-primary font-bold py-2 border-b border-gray-200/10" href="products.html">Products</a>
+                <a class="text-text-primary hover:text-secondary py-2" href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-12 px-6 md:px-12 max-w-7xl mx-auto">
+        <!-- Page Header -->
+        <header class="text-center mb-12">
+            <h1 class="font-headline text-4xl md:text-5xl font-bold text-primary mb-4">Our Collection</h1>
+            <p class="font-body text-text-secondary text-lg mb-8 max-w-2xl mx-auto">Discover premium furnishings for every room</p>
+            <div class="max-w-md mx-auto relative">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                <input id="search-input" class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-secondary/50 font-body transition-shadow shadow-sm" placeholder="Search for luxury furnishings..." type="text"/>
+            </div>
+        </header>
+
+        <!-- Category Filter Tabs -->
+        <div class="sticky top-[72px] z-40 bg-surface/95 backdrop-blur-sm py-4 mb-10 overflow-x-auto hide-scrollbar border-b border-gray-200/50">
+            <div class="flex space-x-4 min-w-max px-2" id="filter-tabs">
+                <!-- Skeleton loader -->
+                <div class="animate-pulse flex gap-3">
+                    <div class="h-8 bg-stone-200 rounded-full w-20"></div>
+                    <div class="h-8 bg-stone-200 rounded-full w-24"></div>
+                    <div class="h-8 bg-stone-200 rounded-full w-24"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
+            <!-- Skeleton loaders -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6 flex flex-col space-y-4 animate-pulse shadow-sm">
+                <div class="aspect-square bg-stone-200 rounded-xl"></div>
+                <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+                <div class="h-6 bg-stone-200 rounded w-1/3"></div>
+                <div class="h-10 bg-stone-200 rounded-xl w-full"></div>
+            </div>
+            <div class="bg-white rounded-xl border border-gray-100 p-6 flex flex-col space-y-4 animate-pulse shadow-sm">
+                <div class="aspect-square bg-stone-200 rounded-xl"></div>
+                <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+                <div class="h-6 bg-stone-200 rounded w-1/3"></div>
+                <div class="h-10 bg-stone-200 rounded-xl w-full"></div>
+            </div>
+            <div class="bg-white rounded-xl border border-gray-100 p-6 flex flex-col space-y-4 animate-pulse shadow-sm">
+                <div class="aspect-square bg-stone-200 rounded-xl"></div>
+                <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+                <div class="h-6 bg-stone-200 rounded w-1/3"></div>
+                <div class="h-10 bg-stone-200 rounded-xl w-full"></div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-20">
+            <span class="material-symbols-outlined text-5xl text-gray-300 mb-4 block">search_off</span>
+            <p class="text-text-secondary text-lg">No products found matching your search.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-highest w-full pt-16 pb-8 border-t border-gray-800/20 text-stone-300">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-start gap-10">
+            <div class="max-w-xs">
+                <h3 class="font-headline text-xl font-bold text-white mb-4">ILIKA SHADES</h3>
+                <p class="font-body text-gray-400 text-sm">Luxury for Every Room. Premium furnishings designed to elevate your living spaces with unparalleled comfort and timeless elegance.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-12">
+                <div>
+                    <h4 class="font-label font-bold text-white mb-4 uppercase tracking-wider text-sm">Links</h4>
+                    <ul class="space-y-2">
+                        <li><a class="font-body text-gray-400 hover:text-white transition-colors text-sm" href="index.html">Home</a></li>
+                        <li><a class="font-body text-gray-400 hover:text-white transition-colors text-sm" href="about.html">About</a></li>
+                        <li><a class="font-body text-gray-400 hover:text-white transition-colors text-sm" href="products.html">Products</a></li>
+                        <li><a class="font-body text-gray-400 hover:text-white transition-colors text-sm" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 md:px-12 mt-12 pt-8 border-t border-gray-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="font-body text-gray-500 text-xs">© 2026 ILIKA SHADES. All rights reserved.</p>
+            <a href="admin/login.html" id="admin-access-link" class="hidden hover:text-white transition-colors text-white text-xs font-bold">Admin Access</a>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a id="floating-whatsapp" class="fixed bottom-6 right-6 z-50 bg-whatsapp text-white w-14 h-14 min-w-[44px] min-h-[44px] rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center animate-pulse group" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website.">
+        <span class="material-symbols-outlined text-3xl group-hover:animate-none">chat</span>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const nav = document.getElementById('main-nav');
+
+            // Mobile menu toggle
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = menuBtn.querySelector('span');
+                    icon.textContent = mobileMenu.classList.contains('hidden') ? 'menu' : 'close';
+                });
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    nav.classList.add('shadow-md', 'bg-surface/95');
+                } else {
+                    nav.classList.remove('shadow-md');
+                }
+            });
+        });
+
+        // Initialize Supabase Integration
+        document.addEventListener('ilika-init', async () => {
+            const client = window.ilika;
+            if (!client) return;
+
+            // Variables for state tracking
+            let categoriesList = [];
+            let productsList = [];
+            let activeCategory = 'all';
+            let searchQuery = '';
+            let businessInfo = null;
+
+            // Fetch business info once
+            businessInfo = await client.getBusinessInfo();
+            if (businessInfo) {
+                const cleanWa = businessInfo.whatsapp.replace(/[^0-9]/g, '');
+                const defaultMsg = encodeURIComponent("Hi ILIKA SHADES, I'm reaching out from your website.");
+                const floatingWA = document.getElementById('floating-whatsapp');
+                if (floatingWA) floatingWA.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+            }
+
+            // Fetch categories & render filter tabs
+            categoriesList = await client.getCategories();
+            const filterTabs = document.getElementById('filter-tabs');
+            if (filterTabs) {
+                filterTabs.innerHTML = `
+                    <button data-category="all" class="filter-btn px-6 py-2 bg-primary text-white rounded-full font-label text-sm font-medium transition-all shadow-sm">All</button>
+                `;
+                categoriesList.forEach(c => {
+                    filterTabs.innerHTML += `
+                        <button data-category-id="${c.id}" class="filter-btn px-6 py-2 bg-white text-text-secondary hover:bg-gray-50 border border-gray-200 rounded-full font-label text-sm font-medium transition-all">${c.name}</button>
+                    `;
+                });
+            }
+
+            // Fetch all products
+            productsList = await client.getProducts();
+            renderProductGrid();
+
+            // Bind click handlers to filter buttons
+            if (filterTabs) {
+                filterTabs.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.filter-btn, [data-category-id]');
+                    if (!btn) return;
+
+                    // Unstyle others
+                    filterTabs.querySelectorAll('button').forEach(b => {
+                        b.className = 'filter-btn px-6 py-2 bg-white text-text-secondary hover:bg-gray-50 border border-gray-200 rounded-full font-label text-sm font-medium transition-all';
+                    });
+
+                    // Style active
+                    btn.className = 'filter-btn px-6 py-2 bg-primary text-white rounded-full font-label text-sm font-medium transition-all shadow-sm';
+
+                    // Update category state
+                    if (btn.hasAttribute('data-category')) {
+                        activeCategory = 'all';
+                    } else {
+                        activeCategory = btn.getAttribute('data-category-id');
+                    }
+
+                    renderProductGrid();
+                });
+            }
+
+            // Bind search query input
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchQuery = e.target.value.toLowerCase().trim();
+                    renderProductGrid();
+                });
+            }
+
+            // Render Product Cards
+            function renderProductGrid() {
+                const grid = document.getElementById('product-grid');
+                const noResults = document.getElementById('no-results');
+                grid.innerHTML = '';
+
+                // Filter list
+                let filtered = productsList;
+                if (activeCategory !== 'all') {
+                    filtered = filtered.filter(p => p.category_id == activeCategory);
+                }
+                if (searchQuery) {
+                    filtered = filtered.filter(p => 
+                        p.name.toLowerCase().includes(searchQuery) || 
+                        (p.description && p.description.toLowerCase().includes(searchQuery))
+                    );
+                }
+
+                if (filtered.length === 0) {
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                noResults.classList.add('hidden');
+
+                filtered.forEach(p => {
+                    const imgUrl = p.product_images && p.product_images.length > 0 
+                        ? p.product_images[0].image_url 
+                        : 'images/placeholder.jpg';
+                    const categoryName = p.categories ? p.categories.name : 'Shades';
+                    
+                    const cleanPhone = businessInfo ? businessInfo.whatsapp.replace(/[^0-9]/g, '') : '919876543210';
+                    const waText = encodeURIComponent(`Hi ILIKA SHADES, I'm interested in: ${p.name}`);
+                    const waLink = `https://wa.me/${cleanPhone}?text=${waText}`;
+
+                    const card = document.createElement('article');
+                    card.className = "product-card bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group overflow-hidden flex flex-col";
+                    card.innerHTML = `
+                        <div class="relative aspect-square overflow-hidden bg-gray-50">
+                            <img alt="${p.name}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${imgUrl}"/>
+                            <span class="absolute top-4 left-4 bg-white/90 backdrop-blur text-primary text-xs font-label font-bold px-3 py-1 rounded-full uppercase tracking-wider">${categoryName}</span>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h2 class="font-headline text-xl font-bold text-text-primary mb-2 line-clamp-1">${p.name}</h2>
+                            <p class="font-headline text-lg font-bold text-primary mb-3">₹${parseFloat(p.price).toLocaleString('en-IN')}</p>
+                            <p class="font-body text-text-secondary text-sm mb-6 flex-grow">${p.description || ''}</p>
+                            <a class="w-full inline-flex justify-center items-center gap-2 bg-whatsapp hover:bg-whatsapp-hover text-white font-label font-medium py-3 px-4 min-h-[44px] rounded-xl transition-colors mt-auto" href="${waLink}" target="_blank">
+                                <span class="material-symbols-outlined text-lg">chat</span>
+                                Inquire on WhatsApp
+                            </a>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        });
+
+        // Admin Access Route Check
+        if (window.location.search.includes('admin=true')) {
+            const adminLink = document.getElementById('admin-access-link');
+            if (adminLink) adminLink.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

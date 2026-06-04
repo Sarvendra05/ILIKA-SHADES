@@ -1,0 +1,18 @@
+{
+  "name": "ilika-shades",
+  "version": "1.0.0",
+  "description": "ILIKA SHADES - Luxury for Every Room",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/start.cjs",
+    "dev": "node scripts/start.cjs",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

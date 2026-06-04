@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Contact Us - ILIKA SHADES</title>
+    <meta name="description" content="Get in touch with ILIKA SHADES. Visit our premium showroom or contact us via Phone, WhatsApp, or Email for consultation.">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Contact Us - ILIKA SHADES">
+    <meta property="og:description" content="Reach out to us for premium home furnishing consultation.">
+    <meta property="og:url" content="https://www.ilikashades.com/contact.html">
+    <meta property="og:type" content="website">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "ILIKA SHADES",
+      "image": "https://www.ilikashades.com/images/placeholder.jpg",
+      "url": "https://www.ilikashades.com/",
+      "telephone": "+919876543210",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Furnishing Lane",
+        "addressLocality": "City Center",
+        "addressCountry": "IN"
+      }
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=DM+Sans:wght@500;700&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#8B6F47",
+                        secondary: "#C4A882",
+                        accent: "#5C7A6B",
+                        whatsapp: "#25D366",
+                        cream: "#F5F0EB",
+                        darkbrown: "#2D241E"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Playfair Display", "serif"],
+                        display: ["Playfair Display", "serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["DM Sans", "sans-serif"]
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+    <!-- Supabase Integration Client scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body class="bg-cream font-body text-stone-800 antialiased pt-20 overflow-x-hidden opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border-b border-stone-200/50 dark:border-stone-800/50 shadow-sm transition-all ease-in-out hover:scale-[1.002] origin-top" id="main-nav">
+        <div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+            <a class="text-2xl font-display font-bold tracking-tight text-[#8B6F47]" href="index.html">ILIKA SHADES</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a class="text-stone-600 dark:text-stone-400 hover:text-[#C4A882] transition-colors duration-300 font-label" href="index.html">Home</a>
+                <a class="text-stone-600 dark:text-stone-400 hover:text-[#C4A882] transition-colors duration-300 font-label" href="about.html">About</a>
+                <a class="text-stone-600 dark:text-stone-400 hover:text-[#C4A882] transition-colors duration-300 font-label" href="products.html">Products</a>
+                <a class="text-[#8B6F47] border-b-2 border-[#8B6F47] pb-1 font-bold font-label flex-col" href="contact.html">Contact</a>
+            </div>
+            <div class="flex items-center">
+                <button class="p-2 text-[#8B6F47] hover:bg-stone-100 rounded-full transition md:hidden" id="mobile-menu-btn">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu container -->
+        <div class="md:hidden hidden bg-white border-t border-stone-200/50 absolute w-full left-0 top-full shadow-lg" id="mobile-menu">
+            <div class="flex flex-col p-6 space-y-4 font-label">
+                <a class="text-stone-600 hover:text-[#C4A882] py-2 border-b border-stone-100" href="index.html">Home</a>
+                <a class="text-stone-600 hover:text-[#C4A882] py-2 border-b border-stone-100" href="about.html">About</a>
+                <a class="text-stone-600 hover:text-[#C4A882] py-2 border-b border-stone-100" href="products.html">Products</a>
+                <a class="text-[#8B6F47] font-bold py-2" href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <header class="py-20 px-6 text-center max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-6xl font-headline font-semibold text-primary mb-6">Get In Touch</h1>
+        <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed">
+            We'd love to hear from you. Visit our showroom or reach out through any of the channels below.
+        </p>
+    </header>
+
+    <!-- Contact Info Cards -->
+    <section class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Phone -->
+            <a id="phone-link" href="tel:+919876543210" class="bg-white p-8 rounded shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center group">
+                <span class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">call</span>
+                <h3 class="text-xl font-headline font-semibold mb-2">Phone</h3>
+                <p id="phone-display" class="text-stone-800 font-medium text-lg mb-2">+91 98765 43210</p>
+                <p class="text-stone-500 text-sm">Call us during business hours</p>
+            </a>
+            <!-- WhatsApp -->
+            <div class="bg-white p-8 rounded shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center border-t-4 border-whatsapp">
+                <span class="material-symbols-outlined text-4xl text-whatsapp mb-4">chat</span>
+                <h3 class="text-xl font-headline font-semibold mb-2">WhatsApp</h3>
+                <p id="whatsapp-display" class="text-stone-800 font-medium text-lg mb-2">+91 98765 43210</p>
+                <p class="text-stone-500 text-sm mb-6">Message us anytime</p>
+                <a id="whatsapp-btn-link" class="inline-flex items-center gap-2 bg-whatsapp text-white px-6 py-2 min-h-[44px] rounded-full font-label font-medium hover:bg-green-600 transition-colors" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website." target="_blank">
+                    <span class="material-symbols-outlined text-sm">chat</span> Chat on WhatsApp
+                </a>
+            </div>
+            <!-- Email -->
+            <a href="mailto:info@ilikashades.com" class="bg-white p-8 rounded shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center group">
+                <span class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">mail</span>
+                <h3 class="text-xl font-headline font-semibold mb-2">Email</h3>
+                <p class="text-stone-800 font-medium text-lg mb-2">info@ilikashades.com</p>
+                <p class="text-stone-500 text-sm">We'll respond within 24 hours</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Address & Map -->
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-white rounded shadow-sm overflow-hidden">
+            <div class="p-10 flex flex-col justify-center">
+                <div class="flex items-start gap-4 mb-6">
+                    <span class="material-symbols-outlined text-3xl text-primary filled-icon mt-1">location_on</span>
+                    <div>
+                        <h2 class="text-3xl font-headline font-semibold text-stone-800 mb-4">Our Showroom</h2>
+                        <p id="address-display" class="text-stone-600 leading-relaxed mb-4">
+                            ILIKA SHADES<br/>
+                            123 Furnishing Lane, City Center<br/>
+                            Near Main Market<br/>
+                            Cityname - 110001
+                        </p>
+                        <div class="bg-cream p-4 rounded text-sm text-stone-700 inline-block border border-secondary/30">
+                            <strong>Directions:</strong> Conveniently located near City Center Metro Station
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-stone-200 min-h-[400px] flex items-center justify-center relative">
+                <!-- Map Placeholder -->
+                <div class="text-center z-10 pointer-events-none">
+                    <span class="material-symbols-outlined text-5xl text-stone-600 mb-2">map</span>
+                    <p class="text-stone-700 font-bold">Showroom Location</p>
+                    <p class="text-stone-500 text-xs mt-1">Click image to open Google Maps</p>
+                </div>
+                <a id="map-link-anchor" class="absolute inset-0 block w-full h-full min-h-[44px]" href="https://maps.google.com/?q=ILIKA+SHADES+City+Center" target="_blank">
+                    <img id="map-image" alt="Map" loading="lazy" decoding="async" class="w-full h-full object-cover opacity-60 mix-blend-multiply hover:opacity-75 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPnfHxTbxF0hk7vRgIOeUXP-rPu8KDnABowRk4mb2XMPzhYgETKRmIfH07uQg7yAxefWyUr-nBSdeJ49ArKOHsPEQ2ALPZR7qzr0raz6y4ltMA9eZdq4yWL9S6gRpOBo48fFCo644CV48rOLQMCrsV-9tHyHzboR0hBeVDDgnXDip4GwmgzhzvDhm987s3OyPINXplq24XXOX96PBu58bmvvYseWFe029HDlcynf0DZDC9P46NKjK7VeK_PxEoAe4sNUyCoyNy2s8t"/>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Hours -->
+    <section class="max-w-3xl mx-auto px-6 py-16 text-center">
+        <span class="material-symbols-outlined text-4xl text-primary mb-4">schedule</span>
+        <h2 class="text-3xl font-headline font-semibold text-stone-800 mb-8">Business Hours</h2>
+        <div class="bg-white rounded shadow-sm border border-stone-100 overflow-hidden text-left">
+            <div class="flex justify-between p-4 border-b border-stone-100 bg-stone-50/50">
+                <span class="font-medium text-stone-700">Mon - Sat</span>
+                <span id="hours-mon-sat" class="text-stone-600">10:00 AM - 8:00 PM</span>
+            </div>
+            <div class="flex justify-between p-4 border-b border-stone-100">
+                <span class="font-medium text-stone-700">Sunday</span>
+                <span id="hours-sun" class="text-stone-600">11:00 AM - 6:00 PM</span>
+            </div>
+            <div class="flex justify-between p-4 bg-stone-50/50">
+                <span class="font-medium text-stone-700">Public Holidays</span>
+                <span id="hours-holidays" class="text-stone-600 italic">By Appointment Only</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="mt-12 bg-gradient-to-br from-primary/10 to-secondary/20 py-20 px-6 text-center border-t border-primary/20">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-headline font-semibold text-stone-800 mb-4">Ready to Transform Your Space?</h2>
+            <p class="text-lg text-stone-600 mb-10">Visit our showroom for personalized consultation</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a id="cta-directions" class="px-8 py-3 min-h-[44px] bg-primary text-white rounded-full font-label font-medium hover:bg-[#7a613f] transition-colors shadow-sm w-full sm:w-auto text-center" href="https://maps.google.com/?q=ILIKA+SHADES+City+Center" target="_blank">
+                    Get Directions
+                </a>
+                <a id="cta-whatsapp" class="px-8 py-3 min-h-[44px] bg-whatsapp text-white rounded-full font-label font-medium hover:bg-green-600 transition-colors shadow-sm flex items-center justify-center gap-2 w-full sm:w-auto text-center" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website." target="_blank">
+                    <span class="material-symbols-outlined text-sm">chat</span> WhatsApp Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full py-12 bg-[#2D241E] dark:bg-stone-950 mt-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 max-w-7xl mx-auto text-stone-300">
+            <div>
+                <h3 class="text-xl font-display font-semibold text-white mb-4">ILIKA SHADES</h3>
+                <p class="font-body text-stone-300 mb-4 text-sm max-w-xs">Luxury for Every Room. Premium furnishings, curtains, mattresses, and blinds.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-label font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2 font-body">
+                    <li><a class="text-stone-400 hover:text-[#C4A882] transition-colors" href="index.html">Home</a></li>
+                    <li><a class="text-stone-400 hover:text-[#C4A882] transition-colors" href="about.html">About</a></li>
+                    <li><a class="text-stone-400 hover:text-[#C4A882] transition-colors" href="products.html">Products</a></li>
+                    <li><a class="text-stone-400 hover:text-[#C4A882] transition-colors" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-label font-semibold mb-4">Connect</h4>
+                <div class="flex space-x-4 mb-4">
+                    <a class="text-stone-400 hover:text-[#C4A882]" href="mailto:info@ilikashades.com"><span class="material-symbols-outlined">mail</span></a>
+                    <a id="footer-call" class="text-stone-400 hover:text-[#C4A882]" href="tel:+919876543210"><span class="material-symbols-outlined">call</span></a>
+                    <a id="footer-whatsapp" class="text-stone-400 hover:text-whatsapp" href="https://wa.me/919876543210"><span class="material-symbols-outlined">chat</span></a>
+                </div>
+                <div class="flex justify-between items-center w-full">
+                    <p class="text-sm font-body text-stone-400">© 2026 ILIKA SHADES. All rights reserved.</p>
+                    <a href="admin/login.html" id="admin-access-link" class="hidden hover:text-white transition-colors text-white text-xs font-bold">Admin Access</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a id="floating-whatsapp" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website." class="fixed bottom-6 right-6 z-[100] bg-[#25D366] rounded-full w-14 h-14 min-w-[44px] min-h-[44px] shadow-xl hover:scale-110 transition-transform animate-pulse flex items-center justify-center cursor-pointer">
+        <span class="material-symbols-outlined text-3xl text-white">chat</span>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = menuBtn.querySelector('span');
+                    icon.textContent = mobileMenu.classList.contains('hidden') ? 'menu' : 'close';
+                });
+            }
+        });
+
+        // Initialize Supabase dynamic details
+        document.addEventListener('ilika-init', async () => {
+            const client = window.ilika;
+            if (!client) return;
+
+            const info = await client.getBusinessInfo();
+            if (info) {
+                // Update Phone details
+                const phoneLink = document.getElementById('phone-link');
+                const phoneDisplay = document.getElementById('phone-display');
+                if (phoneLink) phoneLink.href = `tel:${info.phone}`;
+                if (phoneDisplay) phoneDisplay.textContent = info.phone;
+
+                // Update WhatsApp details
+                const cleanWa = info.whatsapp.replace(/[^0-9]/g, '');
+                const defaultMsg = encodeURIComponent("Hi ILIKA SHADES, I'm reaching out from your website.");
+                const waDisplay = document.getElementById('whatsapp-display');
+                const waBtn = document.getElementById('whatsapp-btn-link');
+                if (waDisplay) waDisplay.textContent = info.whatsapp;
+                if (waBtn) waBtn.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+
+                // Update address
+                const addr = document.getElementById('address-display');
+                if (addr) {
+                    // Split address by commas or display format
+                    addr.innerHTML = info.address.replace(/,\s*/g, '<br/>');
+                }
+
+                // Update map links
+                const mapAnchor = document.getElementById('map-link-anchor');
+                if (mapAnchor && info.map_link) mapAnchor.href = info.map_link;
+
+                // Update business hours
+                const hMonSat = document.getElementById('hours-mon-sat');
+                const hSun = document.getElementById('hours-sun');
+                const hHol = document.getElementById('hours-holidays');
+                if (hMonSat) hMonSat.textContent = info.hours_mon_sat;
+                if (hSun) hSun.textContent = info.hours_sun;
+                if (hHol) hHol.textContent = info.hours_holidays;
+
+                // Update Call-to-actions
+                const ctaDirections = document.getElementById('cta-directions');
+                const ctaWhatsapp = document.getElementById('cta-whatsapp');
+                const floatingWA = document.getElementById('floating-whatsapp');
+                const fCall = document.getElementById('footer-call');
+                const fWA = document.getElementById('footer-whatsapp');
+
+                if (ctaDirections && info.map_link) ctaDirections.href = info.map_link;
+                if (ctaWhatsapp) ctaWhatsapp.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+                if (floatingWA) floatingWA.href = `https://wa.me/${cleanWa}?text=${defaultMsg}`;
+                if (fCall) fCall.href = `tel:${info.phone}`;
+                if (fWA) fWA.href = `https://wa.me/${cleanWa}`;
+            }
+        });
+
+        // Admin Access Route Check
+        if (window.location.search.includes('admin=true')) {
+            const adminLink = document.getElementById('admin-access-link');
+            if (adminLink) adminLink.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

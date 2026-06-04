@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Admin Dashboard - ILIKA SHADES</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700;900&amp;family=Inter:wght@300;400;500;600&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B6F47',
+                        'primary-dark': '#735B39',
+                        secondary: '#C4A882',
+                        'surface': '#F5F0EB',
+                        'on-surface': '#2C2825',
+                        'on-surface-variant': '#5A544F',
+                        'whatsapp': '#25D366'
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Public Sans", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c4a882; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col md:flex-row">
+    <!-- Session Check Shield (Pre-auth blocker) -->
+    <div id="auth-shield" class="fixed inset-0 bg-white z-[9999] flex items-center justify-center">
+        <div class="text-center">
+            <svg class="animate-spin h-10 w-10 text-primary mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="font-label text-stone-500">Checking credentials...</p>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu Navigation -->
+    <aside class="w-full md:w-64 bg-stone-900 text-stone-100 flex-shrink-0 flex flex-col border-r border-stone-800">
+        <!-- Logo -->
+        <div class="p-6 border-b border-stone-800 text-center md:text-left flex justify-between items-center">
+            <div>
+                <h1 class="font-headline text-xl font-bold tracking-tight text-secondary">ILIKA SHADES</h1>
+                <p class="text-[10px] text-stone-500 tracking-wider uppercase font-label">Administration</p>
+            </div>
+            <button class="md:hidden text-stone-400" id="mobile-sidebar-toggle">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <!-- Links -->
+        <nav class="flex-grow p-4 space-y-1 hidden md:block" id="sidebar-nav">
+            <button data-tab="overview" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-secondary bg-stone-800">
+                <span class="material-symbols-outlined">dashboard</span> Dashboard
+            </button>
+            <button data-tab="categories" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800">
+                <span class="material-symbols-outlined">category</span> Categories
+            </button>
+            <button data-tab="products" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800">
+                <span class="material-symbols-outlined">shopping_bag</span> Products
+            </button>
+            <button data-tab="content" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800">
+                <span class="material-symbols-outlined">edit_note</span> Web Content
+            </button>
+        </nav>
+
+        <!-- Footer -->
+        <div class="p-4 border-t border-stone-800 hidden md:block" id="sidebar-footer">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="material-symbols-outlined text-stone-400">account_circle</span>
+                <div class="overflow-hidden">
+                    <p class="text-xs font-medium truncate" id="admin-user-email">admin@ilikashades.com</p>
+                    <span class="text-[10px] text-stone-500 font-label">Active Session</span>
+                </div>
+            </div>
+            <button id="logout-btn" class="w-full bg-stone-800 hover:bg-red-950 hover:text-red-300 text-stone-400 font-label text-xs py-2 rounded transition-colors flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">logout</span> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-grow flex flex-col min-w-0 min-h-screen">
+        <!-- Toast notifications handler -->
+        <div id="toast-container" class="fixed top-6 right-6 z-[9999] flex flex-col gap-3"></div>
+
+        <!-- Header -->
+        <header class="bg-white border-b border-stone-200 py-4 px-8 flex justify-between items-center">
+            <h2 id="active-tab-title" class="font-headline text-2xl font-bold text-stone-800">Dashboard</h2>
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">Supabase Connected</span>
+            </div>
+        </header>
+
+        <!-- Scrollable Dashboard Inner -->
+        <div class="flex-grow p-8 overflow-y-auto max-w-7xl w-full mx-auto space-y-8">
+            <!-- TAB 1: OVERVIEW -->
+            <section id="tab-overview" class="tab-pane space-y-8">
+                <!-- Overview Stats Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded shadow-sm border border-stone-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-label text-on-surface-variant font-bold uppercase tracking-wider mb-1">Total Products</p>
+                            <h3 id="stat-products-count" class="text-4xl font-headline font-bold text-stone-800">0</h3>
+                        </div>
+                        <div class="p-3 rounded-full bg-primary/10 text-primary">
+                            <span class="material-symbols-outlined text-3xl">shopping_bag</span>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded shadow-sm border border-stone-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-label text-on-surface-variant font-bold uppercase tracking-wider mb-1">Total Categories</p>
+                            <h3 id="stat-categories-count" class="text-4xl font-headline font-bold text-stone-800">0</h3>
+                        </div>
+                        <div class="p-3 rounded-full bg-secondary/15 text-secondary">
+                            <span class="material-symbols-outlined text-3xl">category</span>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded shadow-sm border border-stone-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-label text-on-surface-variant font-bold uppercase tracking-wider mb-1">Featured Products</p>
+                            <h3 id="stat-featured-count" class="text-4xl font-headline font-bold text-stone-800">0</h3>
+                        </div>
+                        <div class="p-3 rounded-full bg-yellow-50 text-yellow-600 border border-yellow-200">
+                            <span class="material-symbols-outlined text-3xl fill">star</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Status Message -->
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-8 flex flex-col md:flex-row gap-6 items-center">
+                    <span class="material-symbols-outlined text-5xl text-primary/50">database</span>
+                    <div class="space-y-2 text-center md:text-left flex-grow">
+                        <h4 class="font-headline text-lg font-bold text-stone-800">Dynamic Content Synchronizer</h4>
+                        <p class="text-sm text-stone-600">All modifications made in this panel instantly apply to the live public site. Images uploaded here undergo client-side compression automatically before entering Supabase Storage.</p>
+                    </div>
+                    <a href="../index.html" target="_blank" class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded text-sm font-medium transition-colors inline-flex items-center gap-2">
+                        View Live Site <span class="material-symbols-outlined text-sm">open_in_new</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- TAB 2: CATEGORIES -->
+            <section id="tab-categories" class="tab-pane hidden space-y-6">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-headline text-lg font-bold text-stone-800">Category Catalog</h3>
+                    <button id="add-category-btn" class="bg-primary hover:bg-primary-dark text-white font-label text-sm px-4 py-2 rounded transition-colors flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm font-bold">add</span> Add Category
+                    </button>
+                </div>
+
+                <!-- Categories List -->
+                <div class="bg-white rounded border border-stone-200 overflow-hidden">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-stone-50 border-b border-stone-200 text-on-surface-variant font-label font-bold uppercase tracking-wider text-xs">
+                                <th class="p-4">Category Name</th>
+                                <th class="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-table-body" class="divide-y divide-stone-100">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- TAB 3: PRODUCTS -->
+            <section id="tab-products" class="tab-pane hidden space-y-6">
+                <!-- Filters & Search Toolbar -->
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
+                    <div class="flex flex-col sm:flex-row gap-3 flex-grow max-w-xl">
+                        <div class="relative flex-grow">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400">search</span>
+                            <input id="product-search" type="text" class="w-full pl-10 pr-4 py-2 bg-white border border-stone-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search products..."/>
+                        </div>
+                        <select id="product-category-filter" class="bg-white border border-stone-300 rounded text-sm px-3 py-2 focus:outline-none">
+                            <option value="">All Categories</option>
+                            <!-- Injected -->
+                        </select>
+                    </div>
+                    <button id="add-product-btn" class="bg-primary hover:bg-primary-dark text-white font-label text-sm px-4 py-2 rounded transition-colors flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm font-bold">add</span> Add Product
+                    </button>
+                </div>
+
+                <!-- Products Table -->
+                <div class="bg-white rounded border border-stone-200 overflow-hidden">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-stone-50 border-b border-stone-200 text-on-surface-variant font-label font-bold uppercase tracking-wider text-xs">
+                                <th class="p-4">Product Details</th>
+                                <th class="p-4">Category</th>
+                                <th class="p-4">Price</th>
+                                <th class="p-4 text-center">Featured</th>
+                                <th class="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body" class="divide-y divide-stone-100">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- TAB 4: WEB CONTENT -->
+            <section id="tab-content" class="tab-pane hidden space-y-8">
+                <!-- Subtab Navigation -->
+                <div class="border-b border-stone-200 flex gap-6 font-label text-sm">
+                    <button data-content-subtab="homepage" class="subtab-btn text-primary border-b-2 border-primary pb-3 font-bold">Homepage Settings</button>
+                    <button data-content-subtab="about" class="subtab-btn text-on-surface-variant pb-3 hover:text-primary">About Us Text</button>
+                    <button data-content-subtab="contact" class="subtab-btn text-on-surface-variant pb-3 hover:text-primary">Contact & Showroom</button>
+                </div>
+
+                <form id="business-info-form" class="space-y-8">
+                    <!-- SUBTAB: HOMEPAGE -->
+                    <div id="subtab-homepage" class="subtab-pane space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="hero_title" class="block font-label text-sm font-medium text-on-surface-variant">Hero Headline Title</label>
+                                <input type="text" id="hero_title" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="hero_tagline" class="block font-label text-sm font-medium text-on-surface-variant">Hero Tagline/Sub-title</label>
+                                <input type="text" id="hero_tagline" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                            </div>
+                        </div>
+
+                        <!-- Hero Image Upload -->
+                        <div class="space-y-2">
+                            <label class="block font-label text-sm font-medium text-on-surface-variant">Hero Banner Image</label>
+                            <div class="flex items-center gap-6">
+                                <img id="hero-banner-preview" class="w-48 h-28 object-cover rounded border border-stone-200 bg-stone-50" src="" alt="Hero Banner Preview"/>
+                                <div class="space-y-2">
+                                    <label class="px-4 py-2 bg-white hover:bg-stone-50 border border-stone-300 text-stone-700 rounded text-sm font-medium cursor-pointer inline-flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm">cloud_upload</span> Upload New Banner
+                                        <input type="file" id="hero-banner-upload" accept="image/*" class="hidden"/>
+                                    </label>
+                                    <p class="text-xs text-stone-400">High-resolution horizontal layout suggested.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBTAB: ABOUT -->
+                    <div id="subtab-about" class="subtab-pane hidden space-y-4">
+                        <div class="space-y-2">
+                            <label for="about_us" class="block font-label text-sm font-medium text-on-surface-variant">Business Story & Profile</label>
+                            <textarea id="about_us" rows="8" required class="w-full bg-white border border-stone-300 rounded p-4 focus:ring-1 focus:ring-primary focus:outline-none leading-relaxed text-sm"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SUBTAB: CONTACT -->
+                    <div id="subtab-contact" class="subtab-pane hidden space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="phone" class="block font-label text-sm font-medium text-on-surface-variant">Public Phone Number</label>
+                                <input type="text" id="phone" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="whatsapp" class="block font-label text-sm font-medium text-on-surface-variant">WhatsApp Contact Number</label>
+                                <input type="text" id="whatsapp" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none" placeholder="+91 98765 43210"/>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="address" class="block font-label text-sm font-medium text-on-surface-variant">Physical Showroom Address</label>
+                            <input type="text" id="address" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="map_link" class="block font-label text-sm font-medium text-on-surface-variant">Google Maps Embed Link / Redirection URL</label>
+                            <input type="url" id="map_link" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                        </div>
+
+                        <!-- Business Hours Group -->
+                        <div class="bg-stone-50 border border-stone-200 rounded p-6 space-y-4">
+                            <h4 class="font-headline font-bold text-stone-800 text-sm">Showroom Business Hours</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="space-y-2">
+                                    <label for="hours_mon_sat" class="block font-label text-xs font-semibold text-stone-600">Monday - Saturday</label>
+                                    <input type="text" id="hours_mon_sat" required class="w-full bg-white border border-stone-300 rounded px-3 py-2 text-sm focus:ring-1 focus:ring-primary focus:outline-none"/>
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="hours_sun" class="block font-label text-xs font-semibold text-stone-600">Sunday</label>
+                                    <input type="text" id="hours_sun" required class="w-full bg-white border border-stone-300 rounded px-3 py-2 text-sm focus:ring-1 focus:ring-primary focus:outline-none"/>
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="hours_holidays" class="block font-label text-xs font-semibold text-stone-600">Public Holidays</label>
+                                    <input type="text" id="hours_holidays" required class="w-full bg-white border border-stone-300 rounded px-3 py-2 text-sm focus:ring-1 focus:ring-primary focus:outline-none"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Save Button -->
+                    <div class="border-t border-stone-200 pt-6 flex justify-end">
+                        <button type="submit" id="save-content-btn" class="bg-primary hover:bg-primary-dark text-white font-label text-sm px-6 py-3 rounded shadow-md transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">save</span> Save Website Configurations
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- MODAL: ADD / EDIT CATEGORY -->
+    <div id="category-modal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-6">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md border border-stone-200 overflow-hidden">
+            <div class="bg-stone-50 border-b border-stone-200 px-6 py-4 flex justify-between items-center">
+                <h4 id="category-modal-title" class="font-headline font-bold text-stone-800">Add Category</h4>
+                <button type="button" class="text-stone-400 hover:text-stone-600 close-modal-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="category-form" class="p-6 space-y-6">
+                <input type="hidden" id="category-id"/>
+                <div class="space-y-2">
+                    <label for="category-name" class="block font-label text-sm font-medium text-on-surface-variant">Category Name</label>
+                    <input type="text" id="category-name" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                </div>
+                <div class="flex justify-end gap-3 border-t border-stone-100 pt-4">
+                    <button type="button" class="px-4 py-2 bg-stone-100 text-stone-700 hover:bg-stone-200 rounded text-sm font-medium close-modal-btn">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-primary hover:bg-primary-dark text-white rounded text-sm font-medium">Save Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD / EDIT PRODUCT -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/50 hidden flex items-center justify-center p-6 overflow-y-auto">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl border border-stone-200 overflow-hidden my-8">
+            <div class="bg-stone-50 border-b border-stone-200 px-6 py-4 flex justify-between items-center">
+                <h4 id="product-modal-title" class="font-headline font-bold text-stone-800">Add Product</h4>
+                <button type="button" class="text-stone-400 hover:text-stone-600 close-modal-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="product-form" class="p-6 space-y-6">
+                <input type="hidden" id="product-id"/>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="prod-name" class="block font-label text-sm font-medium text-on-surface-variant">Product Name</label>
+                        <input type="text" id="prod-name" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none"/>
+                    </div>
+                    <div class="space-y-2">
+                        <label for="prod-price" class="block font-label text-sm font-medium text-on-surface-variant">Price (₹)</label>
+                        <input type="number" id="prod-price" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none" min="0"/>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label for="prod-category" class="block font-label text-sm font-medium text-on-surface-variant">Category</label>
+                        <select id="prod-category" required class="w-full bg-white border border-stone-300 rounded px-4 py-2.5 focus:ring-1 focus:ring-primary focus:outline-none">
+                            <option value="">Select Category</option>
+                            <!-- Injected -->
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-3 pt-8">
+                        <input type="checkbox" id="prod-featured" class="h-4 w-4 rounded border-stone-300 text-primary focus:ring-primary"/>
+                        <label for="prod-featured" class="font-label text-sm font-medium text-stone-700 cursor-pointer">Featured Product (Shows on Homepage)</label>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="prod-description" class="block font-label text-sm font-medium text-on-surface-variant">Product Description</label>
+                    <textarea id="prod-description" rows="3" class="w-full bg-white border border-stone-300 rounded p-4 focus:ring-1 focus:ring-primary focus:outline-none text-sm"></textarea>
+                </div>
+
+                <!-- Product Images Manager -->
+                <div class="space-y-4">
+                    <label class="block font-label text-sm font-medium text-on-surface-variant">Product Images</label>
+                    
+                    <!-- Drag and Drop/Click Uploader -->
+                    <div class="border-2 border-dashed border-stone-300 rounded-lg p-6 text-center hover:bg-stone-50 transition-colors cursor-pointer relative" id="image-dropzone">
+                        <input type="file" id="prod-images-upload" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer"/>
+                        <span class="material-symbols-outlined text-4xl text-stone-400 mb-2">cloud_upload</span>
+                        <p class="text-sm font-label font-bold text-stone-700">Choose files or drag them here</p>
+                        <p class="text-xs text-stone-400 mt-1">Images are compressed automatically to WebP/JPEG format on upload.</p>
+                    </div>
+
+                    <!-- Images List with sorting -->
+                    <div id="images-manager-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+                        <!-- Loaded images injected here -->
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 border-t border-stone-100 pt-4">
+                    <button type="button" class="px-4 py-2 bg-stone-100 text-stone-700 hover:bg-stone-200 rounded text-sm font-medium close-modal-btn">Cancel</button>
+                    <button type="submit" id="save-product-btn" class="px-5 py-2 bg-primary hover:bg-primary-dark text-white rounded text-sm font-medium flex items-center gap-2">
+                        Save Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check auth immediately
+            const config = window.SUPABASE_CONFIG;
+            let supabase = null;
+
+            if (!config || !config.url) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                supabase = window.supabase.createClient(config.url, config.anonKey);
+                supabase.auth.getSession().then(({ data: { session } }) => {
+                    if (!session) {
+                        window.location.href = 'login.html';
+                    } else {
+                        document.getElementById('admin-user-email').textContent = session.user.email;
+                        document.getElementById('auth-shield').classList.add('hidden');
+                        initDashboard();
+                    }
+                });
+            } catch (e) {
+                console.error(e);
+                window.location.href = 'login.html';
+            }
+
+            // --- ADMIN CONTROLLER CODE ---
+            let categories = [];
+            let products = [];
+            let productImages = []; // Local working set of images for active product modal edit
+            let businessInfo = {};
+            let currentHeroBannerBlob = null; // Store unsaved homepage hero banner local blob
+
+            function initDashboard() {
+                // Setup Navigation
+                const tabButtons = document.querySelectorAll('.tab-btn');
+                const tabPanes = document.querySelectorAll('.tab-pane');
+                const activeTitle = document.getElementById('active-tab-title');
+
+                tabButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const target = btn.getAttribute('data-tab');
+                        
+                        // Style active button
+                        tabButtons.forEach(b => b.className = 'tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800');
+                        btn.className = 'tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-secondary bg-stone-800';
+
+                        // Show active pane
+                        tabPanes.forEach(pane => pane.classList.add('hidden'));
+                        document.getElementById(`tab-${target}`).classList.remove('hidden');
+
+                        // Set header title
+                        activeTitle.textContent = btn.textContent.trim();
+
+                        // Load data on demand
+                        if (target === 'categories') fetchCategories();
+                        else if (target === 'products') fetchProducts();
+                        else if (target === 'content') fetchBusinessInfo();
+                        else refreshStats();
+                    });
+                });
+
+                // Setup Content Management subtabs
+                const subtabButtons = document.querySelectorAll('[data-content-subtab]');
+                const subtabPanes = document.querySelectorAll('.subtab-pane');
+
+                subtabButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = btn.getAttribute('data-content-subtab');
+
+                        subtabButtons.forEach(b => b.className = 'subtab-btn text-on-surface-variant pb-3 hover:text-primary');
+                        btn.className = 'subtab-btn text-primary border-b-2 border-primary pb-3 font-bold';
+
+                        subtabPanes.forEach(pane => pane.classList.add('hidden'));
+                        document.getElementById(`subtab-${target}`).classList.remove('hidden');
+                    });
+                });
+
+                // Bind Modals Close
+                document.querySelectorAll('.close-modal-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.getElementById('category-modal').classList.add('hidden');
+                        document.getElementById('product-modal').classList.add('hidden');
+                    });
+                });
+
+                // Init modules
+                setupCategories();
+                setupProducts();
+                setupContent();
+                refreshStats();
+
+                // Setup Logout Button
+                document.getElementById('logout-btn').addEventListener('click', async () => {
+                    await supabase.auth.signOut();
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // --- NOTIFICATION TOAST HANDLER ---
+            function showToast(message, type = 'success') {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `flex items-center gap-3 px-5 py-3 rounded shadow-md border text-sm transition-all duration-300 transform translate-x-10 opacity-0 ${
+                    type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'
+                }`;
+
+                const icon = type === 'success' ? 'check_circle' : 'error';
+                toast.innerHTML = `
+                    <span class="material-symbols-outlined text-[20px] text-${type === 'success' ? 'green-500' : 'red-500'}">${icon}</span>
+                    <span>${message}</span>
+                `;
+
+                container.appendChild(toast);
+                // Trigger animation
+                setTimeout(() => {
+                    toast.classList.remove('translate-x-10', 'opacity-0');
+                }, 10);
+
+                // Auto remove
+                setTimeout(() => {
+                    toast.classList.add('translate-x-10', 'opacity-0');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            // --- STATS OVERVIEW ---
+            async function refreshStats() {
+                const { count: prodCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
+                const { count: catCount } = await supabase.from('categories').select('*', { count: 'exact', head: true });
+                const { count: featCount } = await supabase.from('products').select('*', { count: 'exact', head: true }).eq('featured', true);
+
+                document.getElementById('stat-products-count').textContent = prodCount || 0;
+                document.getElementById('stat-categories-count').textContent = catCount || 0;
+                document.getElementById('stat-featured-count').textContent = featCount || 0;
+            }
+
+            // --- CATEGORIES MANAGEMENT ---
+            async function fetchCategories() {
+                const { data, error } = await supabase.from('categories').select('*').order('name');
+                if (error) {
+                    showToast("Failed to fetch categories", "error");
+                    return;
+                }
+                categories = data || [];
+                renderCategories();
+                
+                // Populate categories selectors across views
+                const selectFilter = document.getElementById('product-category-filter');
+                const selectForm = document.getElementById('prod-category');
+                
+                const filterVal = selectFilter.value;
+                const formVal = selectForm.value;
+
+                selectFilter.innerHTML = '<option value="">All Categories</option>';
+                selectForm.innerHTML = '<option value="">Select Category</option>';
+
+                categories.forEach(c => {
+                    selectFilter.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+                    selectForm.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+                });
+
+                selectFilter.value = filterVal;
+                selectForm.value = formVal;
+            }
+
+            function renderCategories() {
+                const tbody = document.getElementById('categories-table-body');
+                tbody.innerHTML = '';
+
+                if (categories.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="2" class="p-8 text-center text-stone-400">No categories found. Click 'Add Category' to create one.</td></tr>`;
+                    return;
+                }
+
+                categories.forEach(c => {
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-stone-50/50";
+                    row.innerHTML = `
+                        <td class="p-4 font-medium text-stone-800">${c.name}</td>
+                        <td class="p-4 text-right flex justify-end gap-3">
+                            <button data-edit-id="${c.id}" class="text-stone-500 hover:text-primary transition-colors flex items-center justify-center p-1 rounded hover:bg-stone-100">
+                                <span class="material-symbols-outlined text-[18px]">edit</span>
+                            </button>
+                            <button data-delete-id="${c.id}" class="text-stone-400 hover:text-red-600 transition-colors flex items-center justify-center p-1 rounded hover:bg-stone-100">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            function setupCategories() {
+                const modal = document.getElementById('category-modal');
+                const form = document.getElementById('category-form');
+                const idInput = document.getElementById('category-id');
+                const nameInput = document.getElementById('category-name');
+                const mTitle = document.getElementById('category-modal-title');
+
+                document.getElementById('add-category-btn').addEventListener('click', () => {
+                    idInput.value = '';
+                    nameInput.value = '';
+                    mTitle.textContent = 'Add Category';
+                    modal.classList.remove('hidden');
+                });
+
+                // Delegate table clicks for edit/delete
+                document.getElementById('categories-table-body').addEventListener('click', async (e) => {
+                    const editBtn = e.target.closest('[data-edit-id]');
+                    const deleteBtn = e.target.closest('[data-delete-id]');
+
+                    if (editBtn) {
+                        const id = editBtn.getAttribute('data-edit-id');
+                        const cat = categories.find(c => c.id == id);
+                        if (cat) {
+                            idInput.value = cat.id;
+                            nameInput.value = cat.name;
+                            mTitle.textContent = 'Edit Category';
+                            modal.classList.remove('hidden');
+                        }
+                    }
+
+                    if (deleteBtn) {
+                        const id = deleteBtn.getAttribute('data-delete-id');
+                        const cat = categories.find(c => c.id == id);
+                        if (confirm(`Are you sure you want to delete the category "${cat.name}"? This will delete all products belonging to this category!`)) {
+                            const { error } = await supabase.from('categories').delete().eq('id', id);
+                            if (error) {
+                                showToast("Failed to delete category", "error");
+                            } else {
+                                showToast("Category deleted successfully");
+                                fetchCategories();
+                                refreshStats();
+                            }
+                        }
+                    }
+                });
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const id = idInput.value;
+                    const name = nameInput.value.trim();
+
+                    if (id) {
+                        // Update
+                        const { error } = await supabase.from('categories').update({ name }).eq('id', id);
+                        if (error) showToast("Error updating category", "error");
+                        else {
+                            showToast("Category updated successfully");
+                            modal.classList.add('hidden');
+                            fetchCategories();
+                        }
+                    } else {
+                        // Insert
+                        const { error } = await supabase.from('categories').insert({ name });
+                        if (error) showToast("Error creating category", "error");
+                        else {
+                            showToast("Category created successfully");
+                            modal.classList.add('hidden');
+                            fetchCategories();
+                            refreshStats();
+                        }
+                    }
+                });
+            }
+
+            // --- PRODUCTS MANAGEMENT ---
+            async function fetchProducts() {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*, categories(name), product_images(*)')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    showToast("Failed to fetch products", "error");
+                    return;
+                }
+                products = data || [];
+                
+                // Sort product images locally by position
+                products.forEach(p => {
+                    if (p.product_images) {
+                        p.product_images.sort((a, b) => a.position - b.position);
+                    }
+                });
+
+                renderProducts();
+            }
+
+            function renderProducts() {
+                const tbody = document.getElementById('products-table-body');
+                const search = document.getElementById('product-search').value.toLowerCase().trim();
+                const catFilter = document.getElementById('product-category-filter').value;
+                
+                tbody.innerHTML = '';
+
+                let filtered = products;
+                if (catFilter) {
+                    filtered = filtered.filter(p => p.category_id == catFilter);
+                }
+                if (search) {
+                    filtered = filtered.filter(p => 
+                        p.name.toLowerCase().includes(search) || 
+                        (p.description && p.description.toLowerCase().includes(search))
+                    );
+                }
+
+                if (filtered.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-stone-400">No matching products found.</td></tr>`;
+                    return;
+                }
+
+                filtered.forEach(p => {
+                    const mainImage = p.product_images && p.product_images.length > 0 
+                        ? p.product_images[0].image_url 
+                        : '../images/placeholder.jpg'; // Simple fallback or placeholder
+
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-stone-50/50";
+                    row.innerHTML = `
+                        <td class="p-4 flex items-center gap-4">
+                            <img class="w-12 h-12 object-cover rounded border border-stone-200 bg-stone-50 flex-shrink-0" src="${mainImage}" alt="${p.name}"/>
+                            <div class="min-w-0">
+                                <h4 class="font-medium text-stone-800 truncate">${p.name}</h4>
+                                <p class="text-xs text-stone-400 truncate max-w-sm">${p.description || 'No description'}</p>
+                            </div>
+                        </td>
+                        <td class="p-4 font-label text-stone-600">${p.categories ? p.categories.name : 'Uncategorized'}</td>
+                        <td class="p-4 font-medium text-stone-800">₹${parseFloat(p.price).toLocaleString('en-IN')}</td>
+                        <td class="p-4 text-center">
+                            <span class="material-symbols-outlined text-[18px] ${p.featured ? 'text-yellow-500 fill' : 'text-stone-300'}">star</span>
+                        </td>
+                        <td class="p-4 text-right flex justify-end gap-3 h-20 items-center">
+                            <button data-prod-edit-id="${p.id}" class="text-stone-500 hover:text-primary transition-colors flex items-center justify-center p-1 rounded hover:bg-stone-100">
+                                <span class="material-symbols-outlined text-[18px]">edit</span>
+                            </button>
+                            <button data-prod-delete-id="${p.id}" class="text-stone-400 hover:text-red-600 transition-colors flex items-center justify-center p-1 rounded hover:bg-stone-100">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            // Image Compression Canvas function
+            function compressImageFile(file) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.src = event.target.result;
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const MAX_WIDTH = 1200;
+                            let width = img.width;
+                            let height = img.height;
+
+                            if (width > MAX_WIDTH) {
+                                height = Math.round((height * MAX_WIDTH) / width);
+                                width = MAX_WIDTH;
+                            }
+
+                            canvas.width = width;
+                            canvas.height = height;
+
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            canvas.toBlob((blob) => {
+                                resolve(blob);
+                            }, 'image/jpeg', 0.85); // Compress to high-quality JPEG (85%)
+                        };
+                    };
+                });
+            }
+
+            function setupProducts() {
+                const modal = document.getElementById('product-modal');
+                const form = document.getElementById('product-form');
+                const idInput = document.getElementById('product-id');
+                const nameInput = document.getElementById('prod-name');
+                const priceInput = document.getElementById('prod-price');
+                const catSelect = document.getElementById('prod-category');
+                const featCheck = document.getElementById('prod-featured');
+                const descText = document.getElementById('prod-description');
+                const mTitle = document.getElementById('product-modal-title');
+                const imagesGrid = document.getElementById('images-manager-grid');
+                const uploaderInput = document.getElementById('prod-images-upload');
+
+                // Filter & Search bindings
+                document.getElementById('product-search').addEventListener('input', renderProducts);
+                document.getElementById('product-category-filter').addEventListener('change', renderProducts);
+
+                document.getElementById('add-product-btn').addEventListener('click', () => {
+                    idInput.value = '';
+                    nameInput.value = '';
+                    priceInput.value = '';
+                    catSelect.value = '';
+                    featCheck.checked = false;
+                    descText.value = '';
+                    productImages = [];
+                    renderImagesManager();
+                    mTitle.textContent = 'Add Product';
+                    modal.classList.remove('hidden');
+                });
+
+                // Delegate table clicks
+                document.getElementById('products-table-body').addEventListener('click', async (e) => {
+                    const editBtn = e.target.closest('[data-prod-edit-id]');
+                    const deleteBtn = e.target.closest('[data-prod-delete-id]');
+
+                    if (editBtn) {
+                        const id = editBtn.getAttribute('data-prod-edit-id');
+                        const p = products.find(prod => prod.id == id);
+                        if (p) {
+                            idInput.value = p.id;
+                            nameInput.value = p.name;
+                            priceInput.value = p.price;
+                            catSelect.value = p.category_id || '';
+                            featCheck.checked = p.featured;
+                            descText.value = p.description || '';
+                            
+                            // Load copy of images
+                            productImages = p.product_images ? [...p.product_images] : [];
+                            renderImagesManager();
+
+                            mTitle.textContent = 'Edit Product';
+                            modal.classList.remove('hidden');
+                        }
+                    }
+
+                    if (deleteBtn) {
+                        const id = deleteBtn.getAttribute('data-prod-delete-id');
+                        const p = products.find(prod => prod.id == id);
+                        if (confirm(`Are you sure you want to delete the product "${p.name}"?`)) {
+                            // 1. Delete associated images from Supabase Storage bucket first
+                            if (p.product_images && p.product_images.length > 0) {
+                                for (const img of p.product_images) {
+                                    // Extract path from public URL
+                                    const pathParts = img.image_url.split('/shades-media/');
+                                    if (pathParts.length > 1) {
+                                        const filePath = decodeURIComponent(pathParts[1]);
+                                        await supabase.storage.from('shades-media').remove([filePath]);
+                                    }
+                                }
+                            }
+
+                            // 2. Delete database row (cascade deletes database product_images)
+                            const { error } = await supabase.from('products').delete().eq('id', id);
+                            if (error) {
+                                showToast("Failed to delete product", "error");
+                            } else {
+                                showToast("Product deleted successfully");
+                                fetchProducts();
+                                refreshStats();
+                            }
+                        }
+                    }
+                });
+
+                // Dynamic images management interface
+                function renderImagesManager() {
+                    imagesGrid.innerHTML = '';
+                    productImages.forEach((img, index) => {
+                        const isNew = img.blob ? true : false;
+                        const src = isNew ? URL.createObjectURL(img.blob) : img.image_url;
+
+                        const card = document.createElement('div');
+                        card.className = "relative rounded border border-stone-200 overflow-hidden bg-stone-50 group shadow-sm flex flex-col";
+                        card.innerHTML = `
+                            <img class="w-full aspect-[4/3] object-cover" src="${src}" alt="Product Image"/>
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <button type="button" data-img-move-left="${index}" class="bg-white hover:bg-stone-100 text-stone-700 w-8 h-8 rounded-full flex items-center justify-center shadow-md ${index === 0 ? 'opacity-50 pointer-events-none' : ''}">
+                                    <span class="material-symbols-outlined text-sm font-bold">arrow_back</span>
+                                </button>
+                                <button type="button" data-img-move-right="${index}" class="bg-white hover:bg-stone-100 text-stone-700 w-8 h-8 rounded-full flex items-center justify-center shadow-md ${index === productImages.length - 1 ? 'opacity-50 pointer-events-none' : ''}">
+                                    <span class="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                                </button>
+                                <button type="button" data-img-delete="${index}" class="bg-red-600 hover:bg-red-700 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md">
+                                    <span class="material-symbols-outlined text-sm font-bold">delete</span>
+                                </button>
+                            </div>
+                            <div class="p-1.5 text-[10px] text-center font-label text-stone-500 bg-stone-100 border-t border-stone-200">
+                                Position #${index + 1} ${isNew ? '<span class="text-primary font-bold">(New)</span>' : ''}
+                            </div>
+                        `;
+                        imagesGrid.appendChild(card);
+                    });
+                }
+
+                // Handle local uploads (with compression)
+                uploaderInput.addEventListener('change', async (e) => {
+                    const files = Array.from(e.target.files);
+                    if (files.length === 0) return;
+
+                    showToast("Compressing and staging images...", "success");
+
+                    for (const file of files) {
+                        try {
+                            const compressedBlob = await compressImageFile(file);
+                            productImages.push({
+                                blob: compressedBlob,
+                                id: null,
+                                position: productImages.length
+                            });
+                        } catch (err) {
+                            console.error(err);
+                            showToast("Image compression failed.", "error");
+                        }
+                    }
+
+                    renderImagesManager();
+                    uploaderInput.value = ''; // Reset input
+                });
+
+                // Image ordering/deletion controls delegate
+                imagesGrid.addEventListener('click', (e) => {
+                    const leftBtn = e.target.closest('[data-img-move-left]');
+                    const rightBtn = e.target.closest('[data-img-move-right]');
+                    const delBtn = e.target.closest('[data-img-delete]');
+
+                    if (leftBtn) {
+                        const idx = parseInt(leftBtn.getAttribute('data-img-move-left'));
+                        if (idx > 0) {
+                            const temp = productImages[idx];
+                            productImages[idx] = productImages[idx - 1];
+                            productImages[idx - 1] = temp;
+                            renderImagesManager();
+                        }
+                    }
+
+                    if (rightBtn) {
+                        const idx = parseInt(rightBtn.getAttribute('data-img-move-right'));
+                        if (idx < productImages.length - 1) {
+                            const temp = productImages[idx];
+                            productImages[idx] = productImages[idx + 1];
+                            productImages[idx + 1] = temp;
+                            renderImagesManager();
+                        }
+                    }
+
+                    if (delBtn) {
+                        const idx = parseInt(delBtn.getAttribute('data-img-delete'));
+                        const deletedImg = productImages.splice(idx, 1)[0];
+                        
+                        // If it was an existing saved database image, track its deletion for saving step
+                        if (deletedImg.id) {
+                            if (!window.deletedImagesQueue) window.deletedImagesQueue = [];
+                            window.deletedImagesQueue.push(deletedImg);
+                        }
+                        
+                        renderImagesManager();
+                    }
+                });
+
+                // Submit Product Form
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const saveBtn = document.getElementById('save-product-btn');
+                    saveBtn.disabled = true;
+                    saveBtn.textContent = 'Saving...';
+
+                    const id = idInput.value;
+                    const name = nameInput.value.trim();
+                    const price = parseFloat(priceInput.value);
+                    const category_id = catSelect.value;
+                    const featured = featCheck.checked;
+                    const description = descText.value.trim();
+
+                    const prodPayload = {
+                        name,
+                        price,
+                        category_id,
+                        featured,
+                        description
+                    };
+
+                    try {
+                        let activeProductId = id;
+
+                        // 1. Save or Update Product table
+                        if (id) {
+                            // Update
+                            const { error } = await supabase.from('products').update(prodPayload).eq('id', id);
+                            if (error) throw error;
+                        } else {
+                            // Insert
+                            const { data, error } = await supabase.from('products').insert(prodPayload).select().single();
+                            if (error) throw error;
+                            activeProductId = data.id;
+                        }
+
+                        // 2. Handle image queue deletions (from bucket and db)
+                        if (window.deletedImagesQueue && window.deletedImagesQueue.length > 0) {
+                            for (const img of window.deletedImagesQueue) {
+                                // Delete from Supabase storage bucket
+                                const pathParts = img.image_url.split('/shades-media/');
+                                if (pathParts.length > 1) {
+                                    const filePath = decodeURIComponent(pathParts[1]);
+                                    await supabase.storage.from('shades-media').remove([filePath]);
+                                }
+                                // Delete row
+                                await supabase.from('product_images').delete().eq('id', img.id);
+                            }
+                            window.deletedImagesQueue = []; // Clear queue
+                        }
+
+                        // 3. Process new image uploads and save positions
+                        for (let i = 0; i < productImages.length; i++) {
+                            const img = productImages[i];
+                            
+                            if (img.blob) {
+                                // Upload brand new image blob
+                                const fileName = `products/${activeProductId}/${Date.now()}-${Math.random().toString(36).substring(2, 9)}.jpg`;
+                                const { error: uploadError } = await supabase.storage
+                                    .from('shades-media')
+                                    .upload(fileName, img.blob, { contentType: 'image/jpeg' });
+                                
+                                if (uploadError) throw uploadError;
+
+                                const imageUrl = `${config.url}/storage/v1/object/public/shades-media/${fileName}`;
+                                
+                                // Insert database image link
+                                const { error: dbImgError } = await supabase
+                                    .from('product_images')
+                                    .insert({
+                                        product_id: activeProductId,
+                                        image_url: imageUrl,
+                                        position: i
+                                    });
+                                if (dbImgError) throw dbImgError;
+                            } else {
+                                // Update position of existing image in the database
+                                const { error: updatePosError } = await supabase
+                                    .from('product_images')
+                                    .update({ position: i })
+                                    .eq('id', img.id);
+                                if (updatePosError) throw updatePosError;
+                            }
+                        }
+
+                        showToast("Product details saved successfully");
+                        modal.classList.add('hidden');
+                        fetchProducts();
+                        refreshStats();
+                    } catch (err) {
+                        console.error(err);
+                        showToast(err.message || "An error occurred while saving the product.", "error");
+                    } finally {
+                        saveBtn.disabled = false;
+                        saveBtn.textContent = 'Save Product';
+                    }
+                });
+            }
+
+            // --- WEBSITE CONTENT MANAGEMENT ---
+            async function fetchBusinessInfo() {
+                const { data, error } = await supabase.from('business_info').select('*').eq('id', 1).single();
+                if (error) {
+                    showToast("Failed to fetch Web configurations", "error");
+                    return;
+                }
+                businessInfo = data || {};
+                
+                // Populate forms
+                document.getElementById('hero_title').value = businessInfo.hero_title || '';
+                document.getElementById('hero_tagline').value = businessInfo.hero_tagline || '';
+                document.getElementById('hero-banner-preview').src = businessInfo.hero_banner || '';
+                document.getElementById('about_us').value = businessInfo.about_us || '';
+                document.getElementById('phone').value = businessInfo.phone || '';
+                document.getElementById('whatsapp').value = businessInfo.whatsapp || '';
+                document.getElementById('address').value = businessInfo.address || '';
+                document.getElementById('map_link').value = businessInfo.map_link || '';
+                document.getElementById('hours_mon_sat').value = businessInfo.hours_mon_sat || '';
+                document.getElementById('hours_sun').value = businessInfo.hours_sun || '';
+                document.getElementById('hours_holidays').value = businessInfo.hours_holidays || '';
+                
+                currentHeroBannerBlob = null; // Clear local staged image files
+            }
+
+            function setupContent() {
+                const bannerInput = document.getElementById('hero-banner-upload');
+                const bannerPreview = document.getElementById('hero-banner-preview');
+                const form = document.getElementById('business-info-form');
+                const saveBtn = document.getElementById('save-content-btn');
+
+                // Hero banner upload listener
+                bannerInput.addEventListener('change', async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    showToast("Compressing hero image...", "success");
+                    try {
+                        const compressedBlob = await compressImageFile(file);
+                        currentHeroBannerBlob = compressedBlob;
+                        bannerPreview.src = URL.createObjectURL(compressedBlob);
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Hero image compression failed.", "error");
+                    }
+                });
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    saveBtn.disabled = true;
+                    saveBtn.textContent = 'Saving Configurations...';
+
+                    let hero_banner = businessInfo.hero_banner;
+
+                    try {
+                        // 1. Upload new Hero Banner image to Supabase storage bucket if staged
+                        if (currentHeroBannerBlob) {
+                            const fileName = `assets/hero-banner-${Date.now()}.jpg`;
+                            const { error: uploadError } = await supabase.storage
+                                .from('shades-media')
+                                .upload(fileName, currentHeroBannerBlob, { contentType: 'image/jpeg', upsert: true });
+                            
+                            if (uploadError) throw uploadError;
+                            hero_banner = `${config.url}/storage/v1/object/public/shades-media/${fileName}`;
+                        }
+
+                        // 2. Prepare payload
+                        const payload = {
+                            hero_title: document.getElementById('hero_title').value.trim(),
+                            hero_tagline: document.getElementById('hero_tagline').value.trim(),
+                            hero_banner,
+                            about_us: document.getElementById('about_us').value.trim(),
+                            phone: document.getElementById('phone').value.trim(),
+                            whatsapp: document.getElementById('whatsapp').value.trim(),
+                            address: document.getElementById('address').value.trim(),
+                            map_link: document.getElementById('map_link').value.trim(),
+                            hours_mon_sat: document.getElementById('hours_mon_sat').value.trim(),
+                            hours_sun: document.getElementById('hours_sun').value.trim(),
+                            hours_holidays: document.getElementById('hours_holidays').value.trim()
+                        };
+
+                        // 3. Save configs in BusinessInfo single row
+                        const { error: dbError } = await supabase.from('business_info').update(payload).eq('id', 1);
+                        if (dbError) throw dbError;
+
+                        showToast("Web Configuration saved successfully");
+                        fetchBusinessInfo(); // Reload fresh state
+                    } catch (err) {
+                        console.error(err);
+                        showToast(err.message || "Failed to save website configurations.", "error");
+                    } finally {
+                        saveBtn.disabled = false;
+                        saveBtn.textContent = 'Save Website Configurations';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

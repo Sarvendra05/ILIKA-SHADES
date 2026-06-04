@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Admin Login - ILIKA SHADES</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700;900&amp;family=Inter:wght@300;400;500;600&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B6F47',
+                        'primary-dark': '#735B39',
+                        secondary: '#C4A882',
+                        'surface': '#F5F0EB',
+                        'on-surface': '#2C2825',
+                        'on-surface-variant': '#5A544F'
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Public Sans", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["DM Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-xl border border-stone-200 overflow-hidden">
+        <!-- Brand Header -->
+        <div class="bg-primary p-8 text-center text-white">
+            <h1 class="font-headline text-3xl font-bold tracking-tight mb-2">ILIKA SHADES</h1>
+            <p class="font-label text-sm text-surface/80 uppercase tracking-widest">Admin Control Panel</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="p-8">
+            <div id="error-box" class="hidden mb-6 bg-red-50 border-l-4 border-red-500 p-4 text-sm text-red-700 rounded">
+                <div class="flex gap-2">
+                    <span class="material-symbols-outlined text-[18px] text-red-500">error</span>
+                    <span id="error-message">Invalid email or password.</span>
+                </div>
+            </div>
+
+            <div id="config-warning" class="hidden mb-6 bg-amber-50 border-l-4 border-amber-500 p-4 text-sm text-amber-800 rounded">
+                <div class="flex gap-2">
+                    <span class="material-symbols-outlined text-[18px] text-amber-600">warning</span>
+                    <span>Please configure your credentials in <code>js/config.js</code> to enable login.</span>
+                </div>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label for="email" class="block font-label text-sm font-medium text-on-surface-variant mb-2">Email Address</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400">mail</span>
+                        <input type="email" id="email" required class="w-full pl-10 pr-4 py-2.5 bg-white border border-stone-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-shadow" placeholder="admin@ilikashades.com"/>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label for="password" class="block font-label text-sm font-medium text-on-surface-variant">Password</label>
+                    </div>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400">lock</span>
+                        <input type="password" id="password" required class="w-full pl-10 pr-4 py-2.5 bg-white border border-stone-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-shadow" placeholder="••••••••"/>
+                    </div>
+                </div>
+
+                <button type="submit" id="submit-btn" class="w-full bg-primary hover:bg-primary-dark text-white font-label font-medium py-3 rounded transition-all shadow-md flex items-center justify-center gap-2">
+                    <span>Sign In</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('login-form');
+            const errorBox = document.getElementById('error-box');
+            const errorMessage = document.getElementById('error-message');
+            const submitBtn = document.getElementById('submit-btn');
+            const warningBox = document.getElementById('config-warning');
+
+            // Verify configuration is loaded
+            const config = window.SUPABASE_CONFIG;
+            let supabase = null;
+
+            if (!config || !config.url) {
+                warningBox.classList.remove('hidden');
+                // Disable login form inputs
+                form.querySelectorAll('input, button').forEach(el => el.disabled = true);
+            } else {
+                try {
+                    supabase = window.supabase.createClient(config.url, config.anonKey);
+                    
+                    // Check if already authenticated, if yes redirect to dashboard
+                    supabase.auth.getSession().then(({ data: { session } }) => {
+                        if (session) {
+                            window.location.href = 'index.html';
+                        }
+                    });
+                } catch (e) {
+                    console.error("Failed to init supabase", e);
+                }
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!supabase) {
+                    errorMessage.textContent = "Database connection failed. Please provide a valid Supabase URL in js/config.js.";
+                    errorBox.classList.remove('hidden');
+                    return;
+                }
+
+                errorBox.classList.add('hidden');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Authenticating...</span>
+                `;
+
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                try {
+                    const { data, error } = await supabase.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+
+                    if (error) {
+                        errorMessage.textContent = error.message;
+                        errorBox.classList.remove('hidden');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<span>Sign In</span>';
+                    } else {
+                        // Success - Session is set in cookies/localstorage by supabase
+                        window.location.href = 'index.html';
+                    }
+                } catch (err) {
+                    errorMessage.textContent = "An unexpected error occurred. Please try again.";
+                    errorBox.classList.remove('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Sign In</span>';
+                    console.error(err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

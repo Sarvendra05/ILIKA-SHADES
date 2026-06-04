@@ -461,6 +461,16 @@
                 const tabButtons = document.querySelectorAll('.tab-btn');
                 const tabPanes = document.querySelectorAll('.tab-pane');
                 const activeTitle = document.getElementById('active-tab-title');
+                const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+                const sidebarNav = document.getElementById('sidebar-nav');
+                const sidebarFooter = document.getElementById('sidebar-footer');
+
+                if (mobileToggle && sidebarNav && sidebarFooter) {
+                    mobileToggle.addEventListener('click', () => {
+                        sidebarNav.classList.toggle('hidden');
+                        sidebarFooter.classList.toggle('hidden');
+                    });
+                }
 
                 tabButtons.forEach(btn => {
                     btn.addEventListener('click', () => {
@@ -476,6 +486,12 @@
 
                         // Set header title
                         activeTitle.textContent = btn.textContent.trim();
+
+                        // Auto-hide sidebar on mobile after selecting a menu item
+                        if (sidebarNav && sidebarFooter) {
+                            sidebarNav.classList.add('hidden');
+                            sidebarFooter.classList.add('hidden');
+                        }
 
                         // Load data on demand
                         if (target === 'categories') fetchCategories();

@@ -164,24 +164,38 @@
                 </button>
             </div>
         </div>
-        <!-- Mobile Sidebar Overlay -->
-        <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] pointer-events-none opacity-0 transition-opacity duration-300 md:hidden"></div>
-        <!-- Mobile Sidebar Drawer -->
-        <div id="mobile-menu-dropdown" class="fixed top-0 right-0 h-full w-[280px] bg-surface shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 md:hidden flex flex-col">
-            <div class="flex items-center justify-between p-6 border-b border-surface-variant/20">
-                <span class="text-xl font-display font-black text-primary tracking-tighter">ILIKA SHADES</span>
-                <button class="text-on-surface hover:text-primary transition-colors" id="mobile-menu-close">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-            <div class="flex flex-col p-6 space-y-4 font-label overflow-y-auto">
-                <a class="text-primary font-bold py-2 border-b border-surface-variant/20" href="index.html">Home</a>
-                <a class="text-on-surface-variant hover:text-primary py-2 border-b border-surface-variant/20" href="about.html">About</a>
-                <a class="text-on-surface-variant hover:text-primary py-2 border-b border-surface-variant/20" href="products.html">Products</a>
-                <a class="text-on-surface-variant hover:text-primary py-2" href="contact.html">Contact</a>
-            </div>
-        </div>
     </nav>
+
+    <!-- Mobile Off-Canvas Sidebar Overlay -->
+    <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/60 z-[998] pointer-events-none opacity-0 transition-opacity duration-300 ease-in-out md:hidden"></div>
+    <!-- Mobile Off-Canvas Sidebar Drawer -->
+    <aside id="mobile-menu-drawer" class="fixed top-0 right-0 h-full w-[80vw] max-w-[320px] bg-surface shadow-[-8px_0_30px_rgba(0,0,0,0.15)] z-[999] transform translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden flex flex-col">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-surface-variant/30">
+            <span class="text-lg font-display font-black text-primary tracking-tighter">ILIKA SHADES</span>
+            <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary/10 text-on-surface-variant hover:text-primary transition-all" id="mobile-menu-close" aria-label="Close menu">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+        </div>
+        <nav class="flex flex-col px-6 py-6 space-y-1 font-label flex-1 overflow-y-auto">
+            <a class="mobile-nav-link flex items-center gap-3 text-primary font-bold py-3 px-3 rounded-lg bg-primary/5" href="index.html">
+                <span class="material-symbols-outlined text-xl">home</span> Home
+            </a>
+            <a class="mobile-nav-link flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 py-3 px-3 rounded-lg transition-colors" href="about.html">
+                <span class="material-symbols-outlined text-xl">info</span> About
+            </a>
+            <a class="mobile-nav-link flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 py-3 px-3 rounded-lg transition-colors" href="products.html">
+                <span class="material-symbols-outlined text-xl">category</span> Products
+            </a>
+            <a class="mobile-nav-link flex items-center gap-3 text-on-surface-variant hover:text-primary hover:bg-primary/5 py-3 px-3 rounded-lg transition-colors" href="contact.html">
+                <span class="material-symbols-outlined text-xl">mail</span> Contact
+            </a>
+        </nav>
+        <div class="px-6 py-5 border-t border-surface-variant/30">
+            <a class="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5c] text-white font-label font-medium py-3 px-4 rounded-xl transition-colors w-full" href="https://wa.me/919876543210?text=Hi%20ILIKA%20SHADES,%20I'm%20reaching%20out%20from%20your%20website." target="_blank">
+                <span class="material-symbols-outlined text-lg">chat</span> WhatsApp Us
+            </a>
+        </div>
+    </aside>
 
     <!-- Hero Banner -->
     <header class="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
@@ -390,29 +404,36 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggle = document.getElementById('mobile-menu-toggle');
-            const dropdown = document.getElementById('mobile-menu-dropdown');
+            const drawer = document.getElementById('mobile-menu-drawer');
             const closeBtn = document.getElementById('mobile-menu-close');
             const backdrop = document.getElementById('mobile-menu-backdrop');
 
-            function toggleMenu() {
-                if (!dropdown) return;
-                const isClosed = dropdown.classList.contains('translate-x-full');
-                if (isClosed) {
-                    dropdown.classList.remove('translate-x-full');
-                    dropdown.classList.add('translate-x-0');
-                    if (backdrop) backdrop.classList.remove('pointer-events-none', 'opacity-0');
-                    if (backdrop) backdrop.classList.add('opacity-100');
-                } else {
-                    dropdown.classList.add('translate-x-full');
-                    dropdown.classList.remove('translate-x-0');
-                    if (backdrop) backdrop.classList.add('pointer-events-none', 'opacity-0');
-                    if (backdrop) backdrop.classList.remove('opacity-100');
-                }
+            function openMenu() {
+                if (!drawer) return;
+                drawer.classList.remove('translate-x-full');
+                drawer.classList.add('translate-x-0');
+                backdrop.classList.remove('pointer-events-none', 'opacity-0');
+                backdrop.classList.add('opacity-100');
+                document.body.style.overflow = 'hidden';
             }
 
-            if (toggle) toggle.addEventListener('click', toggleMenu);
-            if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
-            if (backdrop) backdrop.addEventListener('click', toggleMenu);
+            function closeMenu() {
+                if (!drawer) return;
+                drawer.classList.add('translate-x-full');
+                drawer.classList.remove('translate-x-0');
+                backdrop.classList.add('pointer-events-none', 'opacity-0');
+                backdrop.classList.remove('opacity-100');
+                document.body.style.overflow = '';
+            }
+
+            if (toggle) toggle.addEventListener('click', openMenu);
+            if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+            if (backdrop) backdrop.addEventListener('click', closeMenu);
+
+            // Auto-close on menu link click
+            drawer.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
         });
 
         // Initialize Supabase integrations

@@ -43,6 +43,63 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #c4a882; border-radius: 4px; }
+
+        /* ===== Off-Canvas Mobile Sidebar Drawer ===== */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0);
+            z-index: 998;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            background: rgba(0, 0, 0, 0.55);
+            pointer-events: auto;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+
+        .mobile-sidebar-drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 78%;
+            max-width: 320px;
+            z-index: 999;
+            transform: translateX(-105%);
+            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+        .mobile-sidebar-drawer.open {
+            transform: translateX(0);
+        }
+
+        body.sidebar-open {
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        /* Hide mobile drawer on desktop */
+        @media (min-width: 768px) {
+            .mobile-sidebar-drawer,
+            .sidebar-overlay,
+            .mobile-topbar {
+                display: none !important;
+            }
+        }
+        /* Hide desktop sidebar on mobile */
+        @media (max-width: 767px) {
+            .desktop-sidebar {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body min-h-screen flex flex-col md:flex-row">
@@ -57,21 +114,16 @@
         </div>
     </div>
 
-    <!-- Sidebar Menu Navigation -->
-    <aside class="w-full md:w-64 bg-stone-900 text-stone-100 flex-shrink-0 flex flex-col border-r border-stone-800">
+    <!-- Sidebar Menu Navigation (DESKTOP ONLY) -->
+    <aside class="desktop-sidebar w-64 bg-stone-900 text-stone-100 flex-shrink-0 flex flex-col border-r border-stone-800 min-h-screen">
         <!-- Logo -->
-        <div class="p-6 border-b border-stone-800 text-center md:text-left flex justify-between items-center">
-            <div>
-                <h1 class="font-headline text-xl font-bold tracking-tight text-secondary">ILIKA SHADES</h1>
-                <p class="text-[10px] text-stone-500 tracking-wider uppercase font-label">Administration</p>
-            </div>
-            <button class="md:hidden text-stone-400" id="mobile-sidebar-toggle">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
+        <div class="p-6 border-b border-stone-800 text-left">
+            <h1 class="font-headline text-xl font-bold tracking-tight text-secondary">ILIKA SHADES</h1>
+            <p class="text-[10px] text-stone-500 tracking-wider uppercase font-label">Administration</p>
         </div>
 
         <!-- Links -->
-        <nav class="flex-grow p-4 space-y-1 hidden md:block" id="sidebar-nav">
+        <nav class="flex-grow p-4 space-y-1" id="sidebar-nav-desktop">
             <button data-tab="overview" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-secondary bg-stone-800">
                 <span class="material-symbols-outlined">dashboard</span> Dashboard
             </button>
@@ -87,15 +139,76 @@
         </nav>
 
         <!-- Footer -->
-        <div class="p-4 border-t border-stone-800 hidden md:block" id="sidebar-footer">
+        <div class="p-4 border-t border-stone-800" id="sidebar-footer-desktop">
             <div class="flex items-center gap-3 mb-4">
                 <span class="material-symbols-outlined text-stone-400">account_circle</span>
                 <div class="overflow-hidden">
-                    <p class="text-xs font-medium truncate" id="admin-user-email">admin@ilikashades.com</p>
+                    <p class="text-xs font-medium truncate admin-user-email">admin@ilikashades.com</p>
                     <span class="text-[10px] text-stone-500 font-label">Active Session</span>
                 </div>
             </div>
-            <button id="logout-btn" class="w-full bg-stone-800 hover:bg-red-950 hover:text-red-300 text-stone-400 font-label text-xs py-2 rounded transition-colors flex items-center justify-center gap-2">
+            <button class="logout-btn w-full bg-stone-800 hover:bg-red-950 hover:text-red-300 text-stone-400 font-label text-xs py-2 rounded transition-colors flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">logout</span> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- MOBILE: Top Bar with Hamburger -->
+    <div class="mobile-topbar md:hidden sticky top-0 z-50 bg-stone-900 border-b border-stone-800 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <button id="mobile-sidebar-open" class="text-stone-300 hover:text-white transition-colors p-1 -ml-1" aria-label="Open navigation menu">
+                <span class="material-symbols-outlined text-[26px]">menu</span>
+            </button>
+            <div>
+                <h1 class="font-headline text-base font-bold tracking-tight text-secondary leading-tight">ILIKA SHADES</h1>
+                <p class="text-[9px] text-stone-500 tracking-wider uppercase font-label leading-tight">Admin Panel</p>
+            </div>
+        </div>
+        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-green-900/40 text-green-400 border border-green-800/50">Live</span>
+    </div>
+
+    <!-- MOBILE: Overlay Backdrop -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- MOBILE: Off-Canvas Sidebar Drawer -->
+    <aside id="mobile-sidebar-drawer" class="mobile-sidebar-drawer bg-stone-900 text-stone-100 shadow-2xl">
+        <!-- Drawer Header -->
+        <div class="p-5 border-b border-stone-800 flex items-center justify-between flex-shrink-0">
+            <div>
+                <h1 class="font-headline text-lg font-bold tracking-tight text-secondary">ILIKA SHADES</h1>
+                <p class="text-[10px] text-stone-500 tracking-wider uppercase font-label">Administration</p>
+            </div>
+            <button id="mobile-sidebar-close" class="text-stone-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-stone-800" aria-label="Close navigation menu">
+                <span class="material-symbols-outlined text-[22px]">close</span>
+            </button>
+        </div>
+
+        <!-- Drawer Navigation Links -->
+        <nav class="flex-grow p-4 space-y-1 overflow-y-auto" id="sidebar-nav-mobile">
+            <button data-tab="overview" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-secondary bg-stone-800">
+                <span class="material-symbols-outlined">dashboard</span> Dashboard
+            </button>
+            <button data-tab="categories" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800">
+                <span class="material-symbols-outlined">category</span> Categories
+            </button>
+            <button data-tab="products" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800">
+                <span class="material-symbols-outlined">shopping_bag</span> Products
+            </button>
+            <button data-tab="content" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800">
+                <span class="material-symbols-outlined">edit_note</span> Web Content
+            </button>
+        </nav>
+
+        <!-- Drawer Footer -->
+        <div class="p-4 border-t border-stone-800 flex-shrink-0">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="material-symbols-outlined text-stone-400">account_circle</span>
+                <div class="overflow-hidden">
+                    <p class="text-xs font-medium truncate admin-user-email">admin@ilikashades.com</p>
+                    <span class="text-[10px] text-stone-500 font-label">Active Session</span>
+                </div>
+            </div>
+            <button class="logout-btn w-full bg-stone-800 hover:bg-red-950 hover:text-red-300 text-stone-400 font-label text-xs py-2 rounded transition-colors flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-sm">logout</span> Logout
             </button>
         </div>
@@ -443,7 +556,7 @@
                     if (!session) {
                         window.location.href = 'login.html';
                     } else {
-                        document.getElementById('admin-user-email').textContent = session.user.email;
+                        document.querySelectorAll('.admin-user-email').forEach(el => el.textContent = session.user.email);
                         document.getElementById('auth-shield').classList.add('hidden');
                         initDashboard();
                     }
@@ -461,28 +574,50 @@
             let currentHeroBannerBlob = null; // Store unsaved homepage hero banner local blob
 
             function initDashboard() {
-                // Setup Navigation
+                // ===== OFF-CANVAS MOBILE SIDEBAR CONTROLLER =====
+                const mobileDrawer = document.getElementById('mobile-sidebar-drawer');
+                const sidebarOverlay = document.getElementById('sidebar-overlay');
+                const openBtn = document.getElementById('mobile-sidebar-open');
+                const closeBtn = document.getElementById('mobile-sidebar-close');
+
+                function openMobileSidebar() {
+                    mobileDrawer.classList.add('open');
+                    sidebarOverlay.classList.add('active');
+                    document.body.classList.add('sidebar-open');
+                }
+
+                function closeMobileSidebar() {
+                    mobileDrawer.classList.remove('open');
+                    sidebarOverlay.classList.remove('active');
+                    document.body.classList.remove('sidebar-open');
+                }
+
+                if (openBtn) openBtn.addEventListener('click', openMobileSidebar);
+                if (closeBtn) closeBtn.addEventListener('click', closeMobileSidebar);
+                if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+                // Close sidebar on Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && mobileDrawer.classList.contains('open')) {
+                        closeMobileSidebar();
+                    }
+                });
+
+                // ===== TAB NAVIGATION (synced across desktop + mobile) =====
                 const tabButtons = document.querySelectorAll('.tab-btn');
                 const tabPanes = document.querySelectorAll('.tab-pane');
                 const activeTitle = document.getElementById('active-tab-title');
-                const mobileToggle = document.getElementById('mobile-sidebar-toggle');
-                const sidebarNav = document.getElementById('sidebar-nav');
-                const sidebarFooter = document.getElementById('sidebar-footer');
-
-                if (mobileToggle && sidebarNav && sidebarFooter) {
-                    mobileToggle.addEventListener('click', () => {
-                        sidebarNav.classList.toggle('hidden');
-                        sidebarFooter.classList.toggle('hidden');
-                    });
-                }
 
                 tabButtons.forEach(btn => {
                     btn.addEventListener('click', () => {
                         const target = btn.getAttribute('data-tab');
                         
-                        // Style active button
+                        // Style ALL tab buttons across both desktop and mobile navs
                         tabButtons.forEach(b => b.className = 'tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-stone-400 hover:text-stone-100 hover:bg-stone-800');
-                        btn.className = 'tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-secondary bg-stone-800';
+                        // Highlight matching buttons in BOTH navs
+                        document.querySelectorAll(`.tab-btn[data-tab="${target}"]`).forEach(matchBtn => {
+                            matchBtn.className = 'tab-btn w-full flex items-center gap-3 px-4 py-3 rounded text-sm font-medium transition-all text-secondary bg-stone-800';
+                        });
 
                         // Show active pane
                         tabPanes.forEach(pane => pane.classList.add('hidden'));
@@ -491,11 +626,8 @@
                         // Set header title
                         activeTitle.textContent = btn.textContent.trim();
 
-                        // Auto-hide sidebar on mobile after selecting a menu item
-                        if (sidebarNav && sidebarFooter) {
-                            sidebarNav.classList.add('hidden');
-                            sidebarFooter.classList.add('hidden');
-                        }
+                        // Close mobile sidebar drawer after selecting a nav item
+                        closeMobileSidebar();
 
                         // Load data on demand
                         if (target === 'categories') fetchCategories();
@@ -536,10 +668,12 @@
                 setupContent();
                 refreshStats();
 
-                // Setup Logout Button
-                document.getElementById('logout-btn').addEventListener('click', async () => {
-                    await supabase.auth.signOut();
-                    window.location.href = 'login.html';
+                // Setup Logout Buttons (desktop + mobile drawer)
+                document.querySelectorAll('.logout-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await supabase.auth.signOut();
+                        window.location.href = 'login.html';
+                    });
                 });
             }
 
